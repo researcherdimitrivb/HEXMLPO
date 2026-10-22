@@ -1,4 +1,4 @@
-@prefix : <http://www.w3id.org/hexmlpo/ontology#>.
+@prefix : <http://www.w3id.org/HEXMLPO/ontology#>.
 @prefix gufo: <http://purl.org/nemo/gufo#>.
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
@@ -9,8 +9,27 @@
 @prefix EPO: <https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#>.
 @prefix XMLPO: <http://www.w3id.org/xmlpo/ontology#>.
 
-<http://www.w3id.org/hexmlpo/ontology> rdf:type owl:Ontology;
-    owl:imports gufo:, <http://www.w3id.org/xmlpo/ontology>.
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+
+<http://www.w3id.org/HEXMLPO/ontology> rdf:type owl:Ontology;
+    owl:imports gufo:, <http://www.w3id.org/xmlpo/ontology>;
+	owl:versionIRI <http://www.w3id.org/HEXMLPO/ontology/1.0> ;
+    owl:versionInfo "1.0";
+    dcterms:title "HEXMLPO: Human-centered Explainability Extension for the eXplainable Machine Learning Pipeline Ontology"@en;
+    dcterms:description """HEXMLPO extends XMLPO with concepts for stakeholder-centred explainability, accessibility, explanation quality, user capabilities, modalities, goals, intentions, and interaction contexts. The ontology supports the modelling, analysis, and evaluation of human-centred explainable AI systems from the perspective of diverse stakeholders and their explainability needs."""@en;
+    dcterms:creator <https://orcid.org/0009-0000-3872-8046>;
+    dcterms:created "2026-08-31"^^xsd:date;
+    dcterms:issued "2026-10-22"^^xsd:date;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/>;
+    dcterms:publisher <https://ror.org/006hf6230>;
+    dcterms:source <https://www.w3id.org/xmlpo/ontology>;
+    dcterms:bibliographicCitation
+        "Benckendorff, D.M. (2026). HEXMLPO: Human-centered Explainability extension for the eXplainable Machine Learning Pipeline Ontology. Master's Thesis, University of Twente."@en;
+    vann:preferredNamespacePrefix "hexmlpo";
+    vann:preferredNamespaceUri "http://www.w3id.org/HEXMLPO/ontology#";
+    bibo:status "draft"@en.
 :ExplanationEvaluationMetric rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
     rdfs:subClassOf gufo:FunctionalComplex;
     rdfs:label "ExplanationEvaluationMetric"@en;
