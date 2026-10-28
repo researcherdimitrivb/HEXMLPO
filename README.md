@@ -1,6 +1,6 @@
-# HEXMLPO = Human-Centric Explainability Extension for the Explainable Machine Learning Pipeline Ontology
+# HEXMLPO = Human-centered Explainability extension for the eXplainable Machine Learning Pipeline Ontology
 
-This repo contains relevant files from the Human-Centric Explainability Extension for the Explainable Machine Learning Pipeline Ontology (HEXMLPO) by Dimitri Micha von Benckendorff (2026).
+This repo contains relevant files from the Human-centered Explainability extension for the eXplainable Machine Learning Pipeline Ontology (HEXMLPO) by Dimitri Micha von Benckendorff (2026).
 
 ## Citation
 
@@ -10,11 +10,13 @@ Xhani, D., Rebelo Moreira, J. L., Van Sinderen, M., & Ferreira Pires, L. (2024).
 
 ## Contents
 
-The DonikaXhani2023 folder contains Donika's conceptual model in a .vpp file as well as the ontology in a .ttl file.
+The DimitriMichaVonBenckendorff2026 folder contains Dimitri's ontology files in the .ttl files and explainable machine learning pipeline in the .ipynb file. The nested Data folder contains the results of the explainable machine learning pipeline run in six .csv files.
 
-The DimitriMichaVonBenckendorff2026 folder contains Dimitri's extended conceptual model in a hexmlpo.vpp file, the extended ontology in a hexmlpo.ttl file, and the extended ontology with metadata in a hexmlpo.rdf file. Additionally, this folder contains turtle files of the updated xmlpo, operational ontology for the healthcare use case, and instances reflecting the findings from the problem investigation in this study. Furthermore, the use case specific results are saved in six .json files and transformed to triples for the use case specific knowledge graph saved as the can-xai-kg.ttl file. These transformations are presented in the explaining-CAN-screening.ipynb file. Finally, the aforementioned knowledge graph was completed with all classes, properties, and instances from the relevant turtle files saved as the can-xai-kg-all.ttl file.
+Prerequisites of this work are Donika Xhani's XMLPO paper and Sven van der Peet's CAN screening automation script:
 
-The SvenVanDerPeet2026 folder contains Sven's internship report with a proof of concept for cardiac autonomic neuropathy screening automation in a .pdf file. The machine learning pipeline developed in this work is also provided as the main_ML_V2.py file that uses data in the GE-71_Data_Summary_Table_final.csv file.
+The DonikaXhani2023 folder contains Donika's conceptual model in a .vpp file and the ontology in a .ttl file.
+
+The SvenVanDerPeet2026 folder contains Sven's report in a .pdf file, the script in a .py file, and the input dataset in a .csv file.
 
 ## Contacts
 This space is administered by:
