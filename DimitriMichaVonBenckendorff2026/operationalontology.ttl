@@ -412,9 +412,20 @@
                        gufo:SubKind .
 
 
+###  http://example.com#CANRiskScore1
+:CANRiskScore1 rdf:type owl:NamedIndividual ,
+                        :CANRiskScore ;
+               :hasValue 0.74 .
+
+
 ###  http://example.com#CANScreening
 :CANScreening rdf:type owl:NamedIndividual ,
                        gufo:EventType .
+
+
+###  http://example.com#CANScreening1
+:CANScreening1 rdf:type owl:NamedIndividual ,
+                        :CANScreening .
 
 
 ###  http://example.com#CART
@@ -487,6 +498,13 @@
           gufo:participatedIn :HemoglobinMeasurement1 .
 
 
+###  http://example.com#Patient1_MeasurementResult1
+:Patient1_MeasurementResult1 rdf:type owl:NamedIndividual ,
+                                      :ClinicalMeasurementResult ;
+                             rdfs:comment "Measurement Result (id=1) of Patient (id=1)"@en ;
+                             rdfs:label "Patient1_MeasurementResult1"@en .
+
+
 ###  http://example.com#Person
 :Person rdf:type owl:NamedIndividual ,
                  gufo:Kind .
@@ -495,6 +513,15 @@
 ###  http://example.com#RiskAssessmentForCAN
 :RiskAssessmentForCAN rdf:type owl:NamedIndividual ,
                                gufo:SubKind .
+
+
+###  http://example.com#RiskAssessmentForCAN1
+:RiskAssessmentForCAN1 rdf:type owl:NamedIndividual ,
+                                :RiskAssessmentForCAN ;
+                       :hasScore :CANRiskScore1 ;
+                       gufo:wasCreatedIn :CANScreening1 ;
+                       rdfs:comment "Risk Assessment for Cardiac Autonomic Neuropathy of Patient1"@en ;
+                       rdfs:label "RiskAssessmentForCAN1"@en .
 
 
 ###  http://example.com#T2DM

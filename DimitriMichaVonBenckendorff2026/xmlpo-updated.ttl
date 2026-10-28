@@ -1,11 +1,11 @@
-@prefix : <http://example.com#>.
+@prefix : <http://www.w3id.org/xmlpo/ontology#>.
 @prefix gufo: <http://purl.org/nemo/gufo#>.
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 
-<http://example.com> rdf:type owl:Ontology;
+<http://www.w3id.org/xmlpo/ontology> rdf:type owl:Ontology;
     owl:imports gufo:.
 :MLAlgorithm rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
     rdfs:label "MLAlgorithm"@en.
@@ -125,9 +125,9 @@
     rdfs:label "CategoricalFeature"@en.
 :NumericalFeature rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
     rdfs:label "NumericalFeature"@en.
-:FeatureEnconding rdf:type owl:Class, gufo:EventType, owl:NamedIndividual;
+:FeatureEncoding rdf:type owl:Class, gufo:EventType, owl:NamedIndividual;
     rdfs:subClassOf gufo:Event;
-    rdfs:label "FeatureEnconding"@en.
+    rdfs:label "FeatureEncoding"@en.
 :FeatureScaling rdf:type owl:Class, gufo:EventType, owl:NamedIndividual;
     rdfs:subClassOf gufo:Event;
     rdfs:label "FeatureScaling"@en.
@@ -161,13 +161,13 @@
 :ImputationCharacteristics rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
     rdfs:subClassOf gufo:Quality;
     rdfs:label "ImputationCharacteristics"@en.
-:FeatureEncondingTechnique rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
+:FeatureEncodingTechnique rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
     rdfs:subClassOf gufo:FunctionalComplex;
-    rdfs:label "FeatureEncondingTechnique"@en.
-:DummyEnconding rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
-    rdfs:label "DummyEnconding"@en.
-:TargetEnconding rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
-    rdfs:label "TargetEnconding"@en.
+    rdfs:label "FeatureEncodingTechnique"@en.
+:DummyEncoding rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
+    rdfs:label "DummyEncoding"@en.
+:TargetEncoding rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
+    rdfs:label "TargetEncoding"@en.
 :FeatureScalingTechnique rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
     rdfs:subClassOf gufo:FunctionalComplex;
     rdfs:label "FeatureScalingTechnique"@en.
@@ -350,8 +350,8 @@
 :CategoricalFeature rdfs:subClassOf :Feature.
 :NumericalFeature rdfs:subClassOf :Feature.
 :DummyFeature rdfs:subClassOf :Feature.
-:DummyEnconding rdfs:subClassOf :FeatureEncondingTechnique.
-:TargetEnconding rdfs:subClassOf :FeatureEncondingTechnique.
+:DummyEncoding rdfs:subClassOf :FeatureEncodingTechnique.
+:TargetEncoding rdfs:subClassOf :FeatureEncodingTechnique.
 :StandardizationTechnique rdfs:subClassOf :FeatureScalingTechnique.
 :NormalizationTechnique rdfs:subClassOf :FeatureScalingTechnique.
 :LabeledDataset rdfs:subClassOf :Dataset.
@@ -629,7 +629,7 @@
   owl:onProperty [ owl:inverseOf gufo:participatedIn ];
   owl:someValuesFrom :Algorithm
 ].
-:FeatureEnconding rdfs:subClassOf [
+:FeatureEncoding rdfs:subClassOf [
   rdf:type owl:Restriction;
   owl:onProperty [ owl:inverseOf gufo:participatedIn ];
   owl:someValuesFrom :Algorithm
@@ -683,7 +683,7 @@
   owl:onProperty [ owl:inverseOf gufo:participatedIn ];
   owl:someValuesFrom :ExplanationGeneration
 ].
-:FeatureEnconding rdfs:subClassOf [
+:FeatureEncoding rdfs:subClassOf [
   rdf:type owl:Restriction;
   owl:onProperty [ owl:inverseOf gufo:participatedIn ];
   owl:someValuesFrom :CategoricalFeature
@@ -692,9 +692,9 @@
   rdf:type owl:Restriction;
   owl:onProperty [ owl:inverseOf gufo:wasCreatedIn ];
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :FeatureEnconding
+  owl:onClass :FeatureEncoding
 ].
-:FeatureEnconding rdfs:subClassOf [
+:FeatureEncoding rdfs:subClassOf [
   rdf:type owl:Restriction;
   owl:onProperty gufo:wasCreatedIn;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
@@ -784,10 +784,10 @@
   owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
   owl:onClass :ImputationCharacteristics
 ].
-:FeatureEnconding rdfs:subClassOf [
+:FeatureEncoding rdfs:subClassOf [
   rdf:type owl:Restriction;
   owl:onProperty [ owl:inverseOf gufo:participatedIn ];
-  owl:someValuesFrom :FeatureEncondingTechnique
+  owl:someValuesFrom :FeatureEncodingTechnique
 ].
 :FeatureScaling rdfs:subClassOf [
   rdf:type owl:Restriction;
@@ -901,9 +901,9 @@
   rdf:type owl:Restriction;
   owl:onProperty [ owl:inverseOf gufo:inheresIn ];
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :FeatureEnconding
+  owl:onClass :FeatureEncoding
 ].
-:FeatureEnconding rdfs:subClassOf [
+:FeatureEncoding rdfs:subClassOf [
   rdf:type owl:Restriction;
   owl:onProperty gufo:inheresIn;
   owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;

@@ -1,0 +1,919 @@
+@prefix : <http://www.w3id.org/HEXMLPO/ontology#> .
+@prefix xmlpo: <http://www.w3id.org/xmlpo/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@base <http://www.w3id.org/HEXMLPO/ontology#> .
+
+<http://www.w3id.org/hexmlpo/instances>
+    a owl:Ontology ;
+    owl:imports
+        <http://purl.org/nemo/gufo#> ,
+        <http://www.w3id.org/xmlpo/ontology> ,
+        <http://www.w3id.org/HEXMLPO/ontology> ;
+    dcterms:title "HEXMLPO instances: stakeholder profiles and their explanation needs"@en ;
+    dcterms:description "Individuals for HEXMLPO: prototypical stakeholder profiles, knowledge levels, explanation modalities, goals and types, quality criteria, and the priority, preference, alignment and access relators that connect them."@en ;
+    dcterms:creator <https://orcid.org/0009-0000-3872-8046> ;
+    dcterms:publisher <https://ror.org/006hf6230> .
+
+
+### XAIStakeholder
+
+:DecisionSubjectProfile a owl:NamedIndividual , :DecisionSubject .
+
+:DomainExpertProfile a owl:NamedIndividual , :DomainExpert .
+
+:TechnicalCreatorProfile a owl:NamedIndividual , :TechnicalCreator .
+
+:OperationalUserProfile a owl:NamedIndividual , :OperationalUser .
+
+:OrganisationalComplianceOverseerProfile a owl:NamedIndividual , :OrganisationalComplianceOverseer .
+
+:ResearcherTheoristProfile a owl:NamedIndividual , :ResearcherTheorist .
+
+
+### Knowledge
+
+:DecisionSubjectDomainKnowledge
+    a owl:NamedIndividual , :DomainKnowledge ;
+    :level :Basic ;
+    gufo:inheresIn :DecisionSubjectProfile .
+
+:DecisionSubjectTechnicalKnowledge
+    a owl:NamedIndividual , :TechnicalKnowledge ;
+    :level :Basic ;
+    gufo:inheresIn :DecisionSubjectProfile .
+
+:DomainExpertDomainKnowledge
+    a owl:NamedIndividual , :DomainKnowledge ;
+    :level :Expert ;
+    gufo:inheresIn :DomainExpertProfile .
+
+:DomainExpertTechnicalKnowledge
+    a owl:NamedIndividual , :TechnicalKnowledge ;
+    :level :Intermediate ;
+    gufo:inheresIn :DomainExpertProfile .
+
+:TechnicalCreatorDomainKnowledge
+    a owl:NamedIndividual , :DomainKnowledge ;
+    :level :Intermediate ;
+    gufo:inheresIn :TechnicalCreatorProfile .
+
+:TechnicalCreatorTechnicalKnowledge
+    a owl:NamedIndividual , :TechnicalKnowledge ;
+    :level :Expert ;
+    gufo:inheresIn :TechnicalCreatorProfile .
+
+:OperationalUserDomainKnowledge
+    a owl:NamedIndividual , :DomainKnowledge ;
+    :level :Advanced ;
+    gufo:inheresIn :OperationalUserProfile .
+
+:OperationalUserTechnicalKnowledge
+    a owl:NamedIndividual , :TechnicalKnowledge ;
+    :level :Intermediate ;
+    gufo:inheresIn :OperationalUserProfile .
+
+:ComplianceDomainKnowledge
+    a owl:NamedIndividual , :DomainKnowledge ;
+    :level :Advanced ;
+    gufo:inheresIn :OrganisationalComplianceOverseerProfile .
+
+:ComplianceTechnicalKnowledge
+    a owl:NamedIndividual , :TechnicalKnowledge ;
+    :level :Intermediate ;
+    gufo:inheresIn :OrganisationalComplianceOverseerProfile .
+
+:ResearcherDomainKnowledge
+    a owl:NamedIndividual , :DomainKnowledge ;
+    :level :Advanced ;
+    gufo:inheresIn :ResearcherTheoristProfile .
+
+:ResearcherTechnicalKnowledge
+    a owl:NamedIndividual , :TechnicalKnowledge ;
+    :level :Expert ;
+    gufo:inheresIn :ResearcherTheoristProfile .
+
+
+### Explanation Modalities
+
+:TextualExplanation
+    a owl:NamedIndividual , xmlpo:ExplanationModality ;
+    :format :Textual .
+
+:VisualExplanation
+    a owl:NamedIndividual , xmlpo:ExplanationModality ;
+    :format :Visual .
+
+:NumericalExplanation
+    a owl:NamedIndividual , xmlpo:ExplanationModality ;
+    :format :Numerical .
+
+:RuleExplanation
+    a owl:NamedIndividual , xmlpo:ExplanationModality ;
+    :format :Rule .
+
+
+### Explanation Goals
+
+:Audit a owl:NamedIndividual , :ExplanationGoal .
+
+:CalibrateTrust a owl:NamedIndividual , :ExplanationGoal .
+
+:Contest a owl:NamedIndividual , :ExplanationGoal .
+
+:DecisionSupport a owl:NamedIndividual , :ExplanationGoal .
+
+:Discover a owl:NamedIndividual , :ExplanationGoal .
+
+:Improve a owl:NamedIndividual , :ExplanationGoal .
+
+:Justify a owl:NamedIndividual , :ExplanationGoal .
+
+:Persuade a owl:NamedIndividual , :ExplanationGoal .
+
+
+### Explanation Types
+
+:CaseBasedExplanationType a owl:NamedIndividual , :CaseBasedExplanation .
+
+:ContextualExplanationType a owl:NamedIndividual , :ContextualExplanation .
+
+:ContrastiveExplanationType a owl:NamedIndividual , :ContrastiveExplanation .
+
+:CounterfactualExplanationType a owl:NamedIndividual , :CounterfactualExplanation .
+
+:EverydayExplanationType a owl:NamedIndividual , :EverydayExplanation .
+
+:ScientificExplanationType a owl:NamedIndividual , :ScientificExplanation .
+
+:SimulationBasedExplanationType a owl:NamedIndividual , :SimulationBasedExplanation .
+
+:StatisticalExplanationType a owl:NamedIndividual , :StatisticalExplanation .
+
+:TraceBasedExplanationType a owl:NamedIndividual , :TraceBasedExplanation .
+
+:DataExplanationType a owl:NamedIndividual , :DataExplanation .
+
+:RationaleExplanationType a owl:NamedIndividual , :RationaleExplanation .
+
+:SafetyAndPerformanceExplanationType a owl:NamedIndividual , :SafetyAndPerformanceExplanation .
+
+:ImpactExplanationType a owl:NamedIndividual , :ImpactExplanation .
+
+:FairnessExplanationType a owl:NamedIndividual , :FairnessExplanation .
+
+:ResponsibilityExplanationType a owl:NamedIndividual , :ResponsibilityExplanation .
+
+
+### Explanation Qualities
+
+:Correctness a owl:NamedIndividual , :ExplanationQuality .
+
+:Completeness a owl:NamedIndividual , :ExplanationQuality .
+
+:Consistency a owl:NamedIndividual , :ExplanationQuality .
+
+:Continuity a owl:NamedIndividual , :ExplanationQuality .
+
+:Contrastivity a owl:NamedIndividual , :ExplanationQuality .
+
+:CovariateComplexity a owl:NamedIndividual , :ExplanationQuality .
+
+:Compactness a owl:NamedIndividual , :ExplanationQuality .
+
+:Composition a owl:NamedIndividual , :ExplanationQuality .
+
+:Confidence a owl:NamedIndividual , :ExplanationQuality .
+
+:Context a owl:NamedIndividual , :ExplanationQuality .
+
+:Coherence a owl:NamedIndividual , :ExplanationQuality .
+
+:Controllability a owl:NamedIndividual , :ExplanationQuality .
+
+:ComprehensibilityPerspective
+    :evaluatesWithRespectTo
+        :CovariateComplexity,
+        :Confidence,
+        :Coherence,
+        :Context .
+
+:FidelityPerspective
+    :evaluatesWithRespectTo
+        :Correctness,
+        :Completeness,
+        :Consistency .
+
+
+# ExplanationGoalPriority
+
+### Decision Subjects
+
+:DSGoal1 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :DecisionSubjectProfile , :CalibrateTrust ;
+    :goalRank 1 .
+
+:DSGoal2 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :DecisionSubjectProfile , :DecisionSupport ;
+    :goalRank 2 .
+
+:DSGoal3 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :DecisionSubjectProfile , :Contest ;
+    :goalRank 3 .
+
+### Domain Experts
+
+:DEGoal1 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :DomainExpertProfile , :DecisionSupport ;
+    :goalRank 1 .
+
+:DEGoal2 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :DomainExpertProfile , :CalibrateTrust ;
+    :goalRank 2 .
+
+:DEGoal3 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :DomainExpertProfile , :Justify ;
+    :goalRank 3 .
+
+### Technical Creators
+
+:TCGoal1 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :TechnicalCreatorProfile , :Improve ;
+    :goalRank 1 .
+
+:TCGoal2 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :TechnicalCreatorProfile , :Audit ;
+    :goalRank 2 .
+
+:TCGoal3 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :TechnicalCreatorProfile , :Discover ;
+    :goalRank 3 .
+
+### Operational Users
+
+:OUGoal1 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :OperationalUserProfile , :DecisionSupport ;
+    :goalRank 1 .
+
+:OUGoal2 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :OperationalUserProfile , :CalibrateTrust ;
+    :goalRank 2 .
+
+:OUGoal3 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :OperationalUserProfile , :Improve ;
+    :goalRank 3 .
+
+### Organisational Compliance Overseers
+
+:COGoal1 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :Audit ;
+    :goalRank 1 .
+
+:COGoal2 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :Contest ;
+    :goalRank 2 .
+
+:COGoal3 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :CalibrateTrust ;
+    :goalRank 3 .
+
+### Researchers & Theorists
+
+:RTGoal1 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :ResearcherTheoristProfile , :Discover ;
+    :goalRank 1 .
+
+:RTGoal2 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :ResearcherTheoristProfile , :Improve ;
+    :goalRank 2 .
+
+:RTGoal3 a owl:NamedIndividual , :ExplanationGoalPriority ;
+    gufo:mediates :ResearcherTheoristProfile , :Audit ;
+    :goalRank 3 .
+
+
+ # ExplanationIntention
+
+:DecisionSubjectIntention
+    a owl:NamedIndividual , :ExplanationIntention ;
+    gufo:inheresIn :DecisionSubjectProfile .
+
+:CalibrateTrust gufo:externallyDependsOn :DecisionSubjectIntention .
+
+:DecisionSupport gufo:externallyDependsOn :DecisionSubjectIntention .
+
+:Contest gufo:externallyDependsOn :DecisionSubjectIntention .
+
+:DomainExpertIntention
+    a owl:NamedIndividual , :ExplanationIntention ;
+    gufo:inheresIn :DomainExpertProfile .
+
+:DecisionSupport gufo:externallyDependsOn :DomainExpertIntention .
+
+:CalibrateTrust gufo:externallyDependsOn :DomainExpertIntention .
+
+:Justify gufo:externallyDependsOn :DomainExpertIntention .
+
+:TechnicalCreatorIntention
+    a owl:NamedIndividual , :ExplanationIntention ;
+    gufo:inheresIn :TechnicalCreatorProfile .
+
+:Improve gufo:externallyDependsOn :TechnicalCreatorIntention .
+
+:Audit gufo:externallyDependsOn :TechnicalCreatorIntention .
+
+:Discover gufo:externallyDependsOn :TechnicalCreatorIntention .
+
+:OperationalUserIntention
+    a owl:NamedIndividual , :ExplanationIntention ;
+    gufo:inheresIn :OperationalUserProfile .
+
+:DecisionSupport gufo:externallyDependsOn :OperationalUserIntention .
+
+:CalibrateTrust gufo:externallyDependsOn :OperationalUserIntention .
+
+:Improve gufo:externallyDependsOn :OperationalUserIntention .
+
+:OrganisationalComplianceOverseerIntention
+    a owl:NamedIndividual , :ExplanationIntention ;
+    gufo:inheresIn :OrganisationalComplianceOverseerProfile .
+
+:Audit gufo:externallyDependsOn :OrganisationalComplianceOverseerIntention .
+
+:Contest gufo:externallyDependsOn :OrganisationalComplianceOverseerIntention .
+
+:CalibrateTrust gufo:externallyDependsOn :OrganisationalComplianceOverseerIntention .
+
+:ResearcherTheoristIntention
+    a owl:NamedIndividual , :ExplanationIntention ;
+    gufo:inheresIn :ResearcherTheoristProfile .
+
+:Discover gufo:externallyDependsOn :ResearcherTheoristIntention .
+
+:Improve gufo:externallyDependsOn :ResearcherTheoristIntention .
+
+:Audit gufo:externallyDependsOn :ResearcherTheoristIntention .
+
+
+# ExplanationTypePriority
+
+### Decision Subjects
+
+:DSType1 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DecisionSubjectProfile ;
+    :concernsExplanationType :RationaleExplanationType ;
+    :typeRank 1 .
+
+:DSType2 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DecisionSubjectProfile ;
+    :concernsExplanationType :EverydayExplanationType ;
+    :typeRank 2 .
+
+:DSType3 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DecisionSubjectProfile ;
+    :concernsExplanationType :DataExplanationType ;
+    :typeRank 3 .
+
+:DSType4 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DecisionSubjectProfile ;
+    :concernsExplanationType :ImpactExplanationType ;
+    :typeRank 4 .
+
+:DSType5 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DecisionSubjectProfile ;
+    :concernsExplanationType :CounterfactualExplanationType ;
+    :typeRank 5 .
+
+### Domain Experts
+
+:DEType1 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DomainExpertProfile ;
+    :concernsExplanationType :RationaleExplanationType ;
+    :typeRank 1 .
+
+:DEType2 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DomainExpertProfile ;
+    :concernsExplanationType :ScientificExplanationType ;
+    :typeRank 2 .
+
+:DEType3 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DomainExpertProfile ;
+    :concernsExplanationType :DataExplanationType ;
+    :typeRank 3 .
+
+:DEType4 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DomainExpertProfile ;
+    :concernsExplanationType :TraceBasedExplanationType ;
+    :typeRank 4 .
+
+:DEType5 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :DomainExpertProfile ;
+    :concernsExplanationType :StatisticalExplanationType ;
+    :typeRank 5 .
+
+### Technical Creators
+
+:TCType1 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :TechnicalCreatorProfile ;
+    :concernsExplanationType :TraceBasedExplanationType ;
+    :typeRank 1 .
+
+:TCType2 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :TechnicalCreatorProfile ;
+    :concernsExplanationType :DataExplanationType ;
+    :typeRank 2 .
+
+:TCType3 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :TechnicalCreatorProfile ;
+    :concernsExplanationType :RationaleExplanationType ;
+    :typeRank 3 .
+
+:TCType4 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :TechnicalCreatorProfile ;
+    :concernsExplanationType :SafetyAndPerformanceExplanationType ;
+    :typeRank 4 .
+
+:TCType5 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :TechnicalCreatorProfile ;
+    :concernsExplanationType :ScientificExplanationType ;
+    :typeRank 5 .
+
+### Operational Users
+
+:OUType1 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OperationalUserProfile ;
+    :concernsExplanationType :RationaleExplanationType ;
+    :typeRank 1 .
+
+:OUType2 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OperationalUserProfile ;
+    :concernsExplanationType :DataExplanationType ;
+    :typeRank 2 .
+
+:OUType3 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OperationalUserProfile ;
+    :concernsExplanationType :TraceBasedExplanationType ;
+    :typeRank 3 .
+
+:OUType4 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OperationalUserProfile ;
+    :concernsExplanationType :ImpactExplanationType ;
+    :typeRank 4 .
+
+:OUType5 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OperationalUserProfile ;
+    :concernsExplanationType :ContextualExplanationType ;
+    :typeRank 5 .
+
+### Compliance Overseers
+
+:COType1 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile ;
+    :concernsExplanationType :ResponsibilityExplanationType ;
+    :typeRank 1 .
+
+:COType2 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile ;
+    :concernsExplanationType :SafetyAndPerformanceExplanationType ;
+    :typeRank 2 .
+
+:COType3 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile ;
+    :concernsExplanationType :FairnessExplanationType ;
+    :typeRank 3 .
+
+:COType4 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile ;
+    :concernsExplanationType :DataExplanationType ;
+    :typeRank 4 .
+
+:COType5 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile ;
+    :concernsExplanationType :RationaleExplanationType ;
+    :typeRank 5 .
+
+### Researchers & Theorists
+
+:RTType1 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :ResearcherTheoristProfile ;
+    :concernsExplanationType :TraceBasedExplanationType ;
+    :typeRank 1 .
+
+:RTType2 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :ResearcherTheoristProfile ;
+    :concernsExplanationType :ScientificExplanationType ;
+    :typeRank 2 .
+
+:RTType3 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :ResearcherTheoristProfile ;
+    :concernsExplanationType :DataExplanationType ;
+    :typeRank 3 .
+
+:RTType4 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :ResearcherTheoristProfile ;
+    :concernsExplanationType :RationaleExplanationType ;
+    :typeRank 4 .
+
+:RTType5 a owl:NamedIndividual , :ExplanationTypePriority ;
+    gufo:mediates :ResearcherTheoristProfile ;
+    :concernsExplanationType :SafetyAndPerformanceExplanationType ;
+    :typeRank 5 .
+
+
+# ExplanationQualityPriority
+
+### Decision Subjects
+
+:DSQuality1 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :DecisionSubjectProfile , :Context ;
+    :qualityRank 1 .
+
+:DSQuality2 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :DecisionSubjectProfile , :Coherence ;
+    :qualityRank 2 .
+
+:DSQuality3 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :DecisionSubjectProfile , :CovariateComplexity ;
+    :qualityRank 3 .
+
+### Domain Experts
+
+:DEQuality1 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :DomainExpertProfile , :Context ;
+    :qualityRank 1 .
+
+:DEQuality2 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :DomainExpertProfile , :Coherence ;
+    :qualityRank 2 .
+
+:DEQuality3 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :DomainExpertProfile , :Correctness ;
+    :qualityRank 3 .
+
+### Technical Creators
+
+:TCQuality1 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :TechnicalCreatorProfile , :Completeness ;
+    :qualityRank 1 .
+
+:TCQuality2 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :TechnicalCreatorProfile , :Correctness ;
+    :qualityRank 2 .
+
+:TCQuality3 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :TechnicalCreatorProfile , :Consistency ;
+    :qualityRank 3 .
+
+### Operational Users
+
+:OUQuality1 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :OperationalUserProfile , :Context ;
+    :qualityRank 1 .
+
+:OUQuality2 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :OperationalUserProfile , :Coherence ;
+    :qualityRank 2 .
+
+:OUQuality3 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :OperationalUserProfile , :Confidence ;
+    :qualityRank 3 .
+
+### Organisational Compliance Overseers
+
+:COQuality1 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :Correctness ;
+    :qualityRank 1 .
+
+:COQuality2 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :Completeness ;
+    :qualityRank 2 .
+
+:COQuality3 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :Consistency ;
+    :qualityRank 3 .
+
+### Researchers & Theorists
+
+:RTQuality1 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :ResearcherTheoristProfile , :Completeness ;
+    :qualityRank 1 .
+
+:RTQuality2 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :ResearcherTheoristProfile , :Correctness ;
+    :qualityRank 2 .
+
+:RTQuality3 a owl:NamedIndividual , :ExplanationQualityPriority ;
+    gufo:mediates :ResearcherTheoristProfile , :Consistency ;
+    :qualityRank 3 .
+
+
+# ExplanationModalityPreference
+		
+### Decision Subjects
+
+:DSModality1 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :DecisionSubjectProfile , :TextualExplanation .
+
+:DSModality2 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :DecisionSubjectProfile , :VisualExplanation .
+
+### Domain Experts
+
+:DEModality1 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :DomainExpertProfile , :VisualExplanation .
+
+:DEModality2 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :DomainExpertProfile , :NumericalExplanation .
+
+### Technical Creators
+
+:TCModality1 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :TechnicalCreatorProfile , :NumericalExplanation .
+
+:TCModality2 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :TechnicalCreatorProfile , :VisualExplanation .
+
+### Operational Users
+
+:OUModality1 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :OperationalUserProfile , :VisualExplanation .
+
+:OUModality2 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :OperationalUserProfile , :TextualExplanation .
+
+### Compliance Overseers
+
+:COModality1 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :TextualExplanation .
+
+:COModality2 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :NumericalExplanation .
+
+### Researchers & Theorists
+
+:RTModality1 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :ResearcherTheoristProfile , :NumericalExplanation .
+
+:RTModality2 a owl:NamedIndividual , :ExplanationModalityPreference ;
+    gufo:mediates :ResearcherTheoristProfile , :VisualExplanation .
+
+
+# GoalTypeAlignment
+
+### Discover
+
+:DiscoverAligns1 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Discover ;
+    :concernsExplanationType :DataExplanationType .
+
+:DiscoverAligns2 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Discover ;
+    :concernsExplanationType :StatisticalExplanationType .
+
+:DiscoverAligns3 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Discover ;
+    :concernsExplanationType :ScientificExplanationType .
+
+:DiscoverAligns4 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Discover ;
+    :concernsExplanationType :ContextualExplanationType .
+
+### Decision Support
+
+:DecisionSupportAligns1 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :DecisionSupport ;
+    :concernsExplanationType :RationaleExplanationType .
+
+:DecisionSupportAligns2 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :DecisionSupport ;
+    :concernsExplanationType :CaseBasedExplanationType .
+
+:DecisionSupportAligns3 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :DecisionSupport ;
+    :concernsExplanationType :SimulationBasedExplanationType .
+
+:DecisionSupportAligns4 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :DecisionSupport ;
+    :concernsExplanationType :TraceBasedExplanationType .
+
+:DecisionSupportAligns5 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :DecisionSupport ;
+    :concernsExplanationType :ContextualExplanationType .
+
+### Calibrate Trust
+
+:CalibrateTrustAligns1 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :CalibrateTrust ;
+    :concernsExplanationType :StatisticalExplanationType .
+
+:CalibrateTrustAligns2 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :CalibrateTrust ;
+    :concernsExplanationType :TraceBasedExplanationType .
+
+:CalibrateTrustAligns3 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :CalibrateTrust ;
+    :concernsExplanationType :SafetyAndPerformanceExplanationType .
+
+:CalibrateTrustAligns4 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :CalibrateTrust ;
+    :concernsExplanationType :ImpactExplanationType .
+
+### Justify
+
+:JustifyAligns1 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Justify ;
+    :concernsExplanationType :RationaleExplanationType .
+
+:JustifyAligns2 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Justify ;
+    :concernsExplanationType :TraceBasedExplanationType .
+
+:JustifyAligns3 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Justify ;
+    :concernsExplanationType :ScientificExplanationType .
+
+:JustifyAligns4 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Justify ;
+    :concernsExplanationType :ContextualExplanationType .
+
+### Audit
+
+:AuditAligns1 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Audit ;
+    :concernsExplanationType :TraceBasedExplanationType .
+
+:AuditAligns2 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Audit ;
+    :concernsExplanationType :DataExplanationType .
+
+:AuditAligns3 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Audit ;
+    :concernsExplanationType :ResponsibilityExplanationType .
+
+:AuditAligns4 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Audit ;
+    :concernsExplanationType :FairnessExplanationType .
+
+### Improve
+
+:ImproveAligns1 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Improve ;
+    :concernsExplanationType :CounterfactualExplanationType .
+
+:ImproveAligns2 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Improve ;
+    :concernsExplanationType :ContrastiveExplanationType .
+
+:ImproveAligns3 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Improve ;
+    :concernsExplanationType :SimulationBasedExplanationType .
+
+:ImproveAligns4 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Improve ;
+    :concernsExplanationType :ImpactExplanationType .
+
+### Contest
+
+:ContestAligns1 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Contest ;
+    :concernsExplanationType :CounterfactualExplanationType .
+
+:ContestAligns2 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Contest ;
+    :concernsExplanationType :ContrastiveExplanationType .
+
+:ContestAligns3 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Contest ;
+    :concernsExplanationType :FairnessExplanationType .
+
+:ContestAligns4 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Contest ;
+    :concernsExplanationType :ResponsibilityExplanationType .
+
+### Persuade
+
+:PersuadeAligns1 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Persuade ;
+    :concernsExplanationType :EverydayExplanationType .
+
+:PersuadeAligns2 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Persuade ;
+    :concernsExplanationType :CaseBasedExplanationType .
+
+:PersuadeAligns3 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Persuade ;
+    :concernsExplanationType :ContextualExplanationType .
+
+:PersuadeAligns4 a owl:NamedIndividual , :GoalTypeAlignment ;
+    gufo:mediates :Persuade ;
+    :concernsExplanationType :ImpactExplanationType .
+
+
+# ModalityAccess
+
+### Decision Subjects (not numerical)
+
+:DecisionSubjectHandlesText
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :DecisionSubjectProfile , :TextualExplanation .
+
+:DecisionSubjectHandlesVisual
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :DecisionSubjectProfile , :VisualExplanation .
+
+:DecisionSubjectHandlesRules
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :DecisionSubjectProfile , :RuleExplanation .
+
+### Domain Experts
+
+:DomainExpertHandlesText
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :DomainExpertProfile , :TextualExplanation .
+
+:DomainExpertHandlesVisual
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :DomainExpertProfile , :VisualExplanation .
+
+:DomainExpertHandlesNumerical
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :DomainExpertProfile , :NumericalExplanation .
+
+:DomainExpertHandlesRules
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :DomainExpertProfile , :RuleExplanation .
+
+### Technical Creators
+
+:TechnicalCreatorHandlesText
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :TechnicalCreatorProfile , :TextualExplanation .
+
+:TechnicalCreatorHandlesVisual
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :TechnicalCreatorProfile , :VisualExplanation .
+
+:TechnicalCreatorHandlesNumerical
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :TechnicalCreatorProfile , :NumericalExplanation .
+
+:TechnicalCreatorHandlesRules
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :TechnicalCreatorProfile , :RuleExplanation .
+
+### Operational Users
+
+:OperationalUserHandlesText
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :OperationalUserProfile , :TextualExplanation .
+
+:OperationalUserHandlesVisual
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :OperationalUserProfile , :VisualExplanation .
+
+:OperationalUserHandlesNumerical
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :OperationalUserProfile , :NumericalExplanation .
+
+:OperationalUserHandlesRules
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :OperationalUserProfile , :RuleExplanation .
+
+### Organisational Compliance Overseers
+
+:OrganisationalComplianceOverseerHandlesText
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :TextualExplanation .
+
+:OrganisationalComplianceOverseerHandlesVisual
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :VisualExplanation .
+
+:OrganisationalComplianceOverseerHandlesNumerical
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :NumericalExplanation .
+
+:OrganisationalComplianceOverseerHandlesRules
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :OrganisationalComplianceOverseerProfile , :RuleExplanation .
+
+### Researchers & Theorists
+
+:ResearcherTheoristHandlesText
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :ResearcherTheoristProfile , :TextualExplanation .
+
+:ResearcherTheoristHandlesVisual
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :ResearcherTheoristProfile , :VisualExplanation .
+
+:ResearcherTheoristHandlesNumerical
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :ResearcherTheoristProfile , :NumericalExplanation .
+
+:ResearcherTheoristHandlesRules
+    a owl:NamedIndividual , :ModalityAccess ;
+    gufo:mediates :ResearcherTheoristProfile , :RuleExplanation .

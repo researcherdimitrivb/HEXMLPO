@@ -1,732 +1,1736 @@
-@prefix : <http://www.w3id.org/HEXMLPO/ontology#>.
-@prefix gufo: <http://purl.org/nemo/gufo#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-
-@prefix DUL: <http://ontologydesignpatterns.org/ont/dul/DUL.owl#>.
-@prefix EPO: <https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#>.
-@prefix XMLPO: <http://www.w3id.org/xmlpo/ontology#>.
-
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix : <http://www.w3id.org/HEXMLPO/ontology#> .
+@prefix DUL: <http://ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+@prefix EPO: <https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix XMLPO: <http://www.w3id.org/xmlpo/ontology#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://www.w3id.org/HEXMLPO/ontology#> .
 
-<http://www.w3id.org/HEXMLPO/ontology> rdf:type owl:Ontology;
-    owl:imports gufo:, <http://www.w3id.org/xmlpo/ontology>;
-	owl:versionIRI <http://www.w3id.org/HEXMLPO/ontology/1.0> ;
-    owl:versionInfo "1.0";
-    dcterms:title "HEXMLPO: Human-centered Explainability Extension for the eXplainable Machine Learning Pipeline Ontology"@en;
-    dcterms:description """HEXMLPO extends XMLPO with concepts for stakeholder-centred explainability, accessibility, explanation quality, user capabilities, modalities, goals, intentions, and interaction contexts. The ontology supports the modelling, analysis, and evaluation of human-centred explainable AI systems from the perspective of diverse stakeholders and their explainability needs."""@en;
-    dcterms:creator <https://orcid.org/0009-0000-3872-8046>;
-    dcterms:created "2026-08-31"^^xsd:date;
-    dcterms:issued "2026-10-22"^^xsd:date;
-    dcterms:license <https://creativecommons.org/licenses/by/4.0/>;
-    dcterms:publisher <https://ror.org/006hf6230>;
-    dcterms:source <https://www.w3id.org/xmlpo/ontology>;
-    dcterms:bibliographicCitation
-        "Benckendorff, D.M. (2026). HEXMLPO: Human-centered Explainability extension for the eXplainable Machine Learning Pipeline Ontology. Master's Thesis, University of Twente."@en;
-    vann:preferredNamespacePrefix "hexmlpo";
-    vann:preferredNamespaceUri "http://www.w3id.org/HEXMLPO/ontology#";
-    bibo:status "draft"@en.
-:ExplanationEvaluationMetric rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:FunctionalComplex;
-    rdfs:label "ExplanationEvaluationMetric"@en;
-    rdfs:comment "A measure for assessing an explanation quality, which contributes to a desideratum and is evaluated at a given level of contextuality."@en.
-:ExplanationEvaluationExecution rdf:type owl:Class, gufo:EventType, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Event;
-    rdfs:label "ExplanationEvaluationExecution"@en;
-    rdfs:comment "An event in which an explanation evaluation metric is applied to an explanation, producing an explanation quality measurement."@en.
-:ExplanationQualityMeasurement rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Quality;
-    rdfs:label "ExplanationQualityMeasurement"@en;
-    rdfs:comment "A quality of an explanation that records the outcome of measuring it with an explanation evaluation metric."@en.
-:Desideratum rdf:type owl:Class, gufo:Category, owl:NamedIndividual;
-    rdfs:subClassOf gufo:FunctionalComplex;
-    rdfs:label "Desideratum"@en;
-    rdfs:comment "A property that explanations are desired to satisfy, classified as interpretability or technical, and to which evaluation metrics contribute."@en.
-:DesideratumName rdf:type owl:Class, gufo:AbstractIndividualType, owl:NamedIndividual;
-    rdfs:subClassOf gufo:QualityValue;
-    owl:equivalentClass [
-  rdf:type owl:Class;
-  owl:oneOf (:Interpretability :Technical)
-];
-    rdfs:comment "An enumeration of the names under which desiderata are classified: interpretability and technical."@en.
-:Interpretability rdf:type :DesideratumName;
-    rdfs:label "Interpretability".
-:Technical rdf:type :DesideratumName;
-    rdfs:label "Technical".
-:DesideratumName rdfs:label "DesideratumName"@en.
-:ContextualityLevel rdf:type owl:Class, gufo:AbstractIndividualType, owl:NamedIndividual;
-    rdfs:subClassOf gufo:QualityValue;
-    owl:equivalentClass [
-  rdf:type owl:Class;
-  owl:oneOf (:IExplanansCentric :IIModelObservation :IIIInputIntervention :IVModelIntervention :VAPrioriConstrained)
-];
-    rdfs:comment "An ordinal scale characterising the context in which an evaluation metric assesses an explanation: explanans-centric, model observation, input intervention, model intervention, or a priori constrained."@en.
-:IExplanansCentric rdf:type :ContextualityLevel;
-    rdfs:label "IExplanansCentric".
-:IIModelObservation rdf:type :ContextualityLevel;
-    rdfs:label "IIModelObservation".
-:IIIInputIntervention rdf:type :ContextualityLevel;
-    rdfs:label "IIIInputIntervention".
-:IVModelIntervention rdf:type :ContextualityLevel;
-    rdfs:label "IVModelIntervention".
-:VAPrioriConstrained rdf:type :ContextualityLevel;
-    rdfs:label "VAPrioriConstrained".
-:ContextualityLevel rdfs:label "ContextualityLevel"@en.
-DUL:Theory rdf:type owl:Class, gufo:Category, owl:NamedIndividual;
-    rdfs:subClassOf gufo:FunctionalComplex;
-    rdfs:label "Theory"@en;
-    rdfs:comment "A set of general assumptions or principles used to describe or account for phenomena, on which an explanation relies."@en.
-DUL:Agent rdf:type owl:Class, gufo:Category, owl:NamedIndividual;
-    rdfs:subClassOf gufo:FunctionalComplex;
-    rdfs:label "Agent"@en;
-    rdfs:comment "An entity, physical or social, that can act intentionally and that conceptualises an explanation."@en.
-EPO:Condition rdf:type owl:Class, gufo:SituationType, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Situation;
-    rdfs:label "Condition"@en;
-    rdfs:comment "A situation under which an explanation holds, specifying the circumstances in which an explanans accounts for an explanandum."@en.
-EPO:Explanandum rdf:type owl:Class, gufo:EventType, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Event;
-    rdfs:label "Explanandum"@en;
-    rdfs:comment "The outcome or phenomenon to be explained, such as a prediction or decision of an ML model."@en.
-EPO:Explanans rdf:type owl:Class, gufo:EventType, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Event;
-    rdfs:label "Explanans"@en;
-    rdfs:comment "That which does the explaining, namely the reasons or factors that account for an explanandum."@en.
-EPO:Explanation rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Relator;
-    rdfs:label "Explanation"@en;
-    rdfs:comment "A relator representing an explanatory relationship between an explanans and an explanandum."@en.	
-:RepresentationFormat rdf:type owl:Class, gufo:AbstractIndividualType, owl:NamedIndividual;
-    rdfs:subClassOf gufo:QualityValue;
-	rdfs:label "RepresentationFormat"@en;
-    owl:equivalentClass [
-  rdf:type owl:Class;
-  owl:oneOf (:Textual :Visual :Numerical :Example)
-];
-    rdfs:comment "An enumeration of the formats in which an explanation can be represented: textual, visual, numerical, or example-based."@en.
-:Textual rdf:type :RepresentationFormat;
-    rdfs:label "Textual".
-:Visual rdf:type :RepresentationFormat;
-    rdfs:label "Visual".
-:Numerical rdf:type :RepresentationFormat;
-    rdfs:label "Numerical".
-:Example rdf:type :RepresentationFormat;
-    rdfs:label "Example".
-:XAIStakeholder rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
-    rdfs:label "XAIStakeholder"@en;
-    rdfs:comment "A person who interacts with, consumes, develops, governs, evaluates, or is affected by explanations generated by an XAI system."@en.
-:DecisionSubject rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
-    rdfs:label "DecisionSubject"@en;
-    rdfs:comment "A stakeholder who is directly affected by a decision or prediction produced by an ML model."@en.
-:DomainExpert rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
-    rdfs:label "DomainExpert"@en;
-    rdfs:comment "A stakeholder possessing expertise about the application domain in which the AI system operates."@en.
-:TechnicalCreator rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
-    rdfs:label "TechnicalCreator"@en;
-    rdfs:comment "A stakeholder responsible for developing, maintaining, or validating AI or XAI systems."@en.
-:OperationalUser rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
-    rdfs:label "OperationalUser"@en;
-    rdfs:comment "A stakeholder who uses the outputs of an AI system during operational decision making."@en.
-:OrganisationalComplianceOverseer rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
-    rdfs:label "OrganisationalComplianceOverseer"@en;
-    rdfs:comment "A stakeholder responsible for governance, compliance, auditing, or regulatory oversight of AI systems."@en.
-:ResearcherTheorist rdf:type owl:Class, gufo:Role, owl:NamedIndividual;
-    rdfs:label "ResearcherTheorist"@en;
-    rdfs:comment "A stakeholder interested in advancing scientific understanding of AI, XAI, or explanatory phenomena."@en.
-:Person rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:FunctionalComplex;
-    rdfs:label "Person"@en;
-    rdfs:comment "A human being who may take on stakeholder roles and who possesses knowledge and sensory abilities."@en.
-:SensoryAbility rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:IntrinsicMode;
-    rdfs:label "SensoryAbility"@en;
-    rdfs:comment "A capacity of a person to perceive information through a sense, such as vision or hearing, which determines the explanation modalities the person can make use of."@en.
-:VisualAcuity rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "VisualAcuity"@en;
-    rdfs:comment "A sensory ability concerning the sharpness and clarity of a person's vision."@en.
-:FunctionalStatus rdf:type owl:Class, gufo:AbstractIndividualType, owl:NamedIndividual;
-    rdfs:subClassOf gufo:QualityValue;
-    owl:equivalentClass [
-  rdf:type owl:Class;
-  owl:oneOf (:NonFunctional :Impaired :FullyFunctional)
-];
-    rdfs:comment "An enumeration of the degrees to which a sensory ability functions: non-functional, impaired, or fully functional."@en.
-:NonFunctional rdf:type :FunctionalStatus;
-    rdfs:label "NonFunctional".
-:Impaired rdf:type :FunctionalStatus;
-    rdfs:label "Impaired".
-:FullyFunctional rdf:type :FunctionalStatus;
-    rdfs:label "FullyFunctional".
-:FunctionalStatus rdfs:label "FunctionalStatus"@en.
-:AuditoryAcuity rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "AuditoryAcuity"@en;
-    rdfs:comment "A sensory ability concerning the sharpness and clarity of a person's hearing."@en.
-:ExplanationGoal rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:IntrinsicMode;
-    rdfs:label "ExplanationGoal"@en;
-    rdfs:comment "A stakeholder objective that motivates the need for an explanation."@en.
-:ExplanationIntention rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:IntrinsicMode;
-    rdfs:label "ExplanationIntention"@en;
-    rdfs:comment "A stakeholder-specific disposition that gives rise to one or more explanation goals."@en.
-:ExplanationType rdf:type owl:NamedIndividual;
-    rdfs:subClassOf gufo:ConcreteIndividualType;
-    rdfs:label "ExplanationType"@en;
-    rdfs:comment "A category of explanation that characterises the form or reasoning pattern expressed by an explanation artifact."@en.
-:CaseBasedExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "CaseBasedExplanation"@en;
-    rdfs:comment "An explanation that supports a conclusion by presenting actual prior cases that are similar to the one being explained."@en.
-:ResponsibilityExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "ResponsibilityExplanation"@en;
-    rdfs:comment "An explanation identifying who is involved in developing, managing, and operating an AI system, and whom to contact for human review of a decision."@en.
-:EverydayExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "EverydayExplanation"@en;
-    rdfs:comment "An explanation that accounts for an outcome through familiar real-world accounts that appeal to the stakeholder's general knowledge and understanding."@en.
-:ContextualExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "ContextualExplanation"@en;
-    rdfs:comment "An explanation that draws on information beyond the explicit inputs and outputs, such as the user, the situation, and the wider environment."@en.
-:ContrastiveExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "ContrastiveExplanation"@en;
-    rdfs:comment "An explanation that accounts for why one outcome occurred instead of a specific alternative outcome."@en.
-:RationaleExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "RationaleExplanation"@en;
-    rdfs:comment "An explanation stating the reasons that led to an AI-supported decision, expressed in an accessible and understandable way."@en.
-:StatisticalExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "StatisticalExplanation"@en;
-    rdfs:comment "An explanation that conveys statistical or probabilistic evidence, such as the uncertainty or likelihood associated with an output."@en.
-:CounterfactualExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "CounterfactualExplanation"@en;
-    rdfs:comment "An explanation describing which outcome would have resulted had the inputs been different."@en.
-:ScientificExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "ScientificExplanation"@en;
-    rdfs:comment "An explanation that supports a conclusion by referring to the results of the scientific method, such as findings from rigorous, peer-reviewed studies."@en.
-:SimulationBasedExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "SimulationBasedExplanation"@en;
-    rdfs:comment "An explanation that relies on an imitation of a system or process and on the results that emerge from running it on similar inputs."@en.
-:TraceBasedExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "TraceBasedExplanation"@en;
-    rdfs:comment "An explanation that presents the sequence of steps, including data sources and logic, by which a system arrived at a specific result."@en.
-:SafetyAndPerformanceExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "SafetyAndPerformanceExplanation"@en;
-    rdfs:comment "An explanation describing the steps taken to maximise the accuracy, reliability, security, and safety of the outputs and behaviour of an AI system."@en.
-:ImpactExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "ImpactExplanation"@en;
-    rdfs:comment "An explanation describing the effects that the use of an AI system and its decisions has, or may have, on individuals and on society."@en.
-:FairnessExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "FairnessExplanation"@en;
-    rdfs:comment "An explanation describing the steps taken to ensure that an AI-supported decision is unbiased and treats individuals equitably."@en.
-:DataExplanation rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "DataExplanation"@en;
-    rdfs:comment "An explanation describing which data were used to train, test, and reach a decision in an AI system, and how they were used."@en.
-:ExplanationQuality rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Quality;
-    rdfs:label "ExplanationQuality"@en;
-    rdfs:comment "A quality attribute used to assess the effectiveness or suitability of an explanation artifact."@en.
-:Correctness rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Correctness"@en;
-    rdfs:comment "The degree to which an explanation accurately reflects the underlying system behaviour."@en.
-:Completeness rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Completeness"@en;
-    rdfs:comment "The degree to which an explanation contains all information required for its intended purpose."@en.
-:Consistency rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Consistency"@en;
-    rdfs:comment "The degree to which similar situations yield coherent and non-contradictory explanations."@en.
-:Continuity rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Continuity"@en;
-    rdfs:comment "The degree to which small changes in inputs produce proportionate changes in explanations."@en.
-:Contrastivity rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Contrastivity"@en;
-    rdfs:comment "The degree to which an explanation highlights why one outcome occurred instead of an alternative."@en.
-:CovariateComplexity rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "CovariateComplexity"@en;
-    rdfs:comment "The degree of complexity associated with the variables, features, or factors used in an explanation."@en.
-:Compactness rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Compactness"@en;
-    rdfs:comment "The degree to which an explanation conveys information concisely."@en.
-:Composition rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Composition"@en;
-    rdfs:comment "The degree to which explanatory information is organised and structured effectively."@en.
-:Confidence rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Confidence"@en;
-    rdfs:comment "The degree to which an explanation conveys certainty or evidential strength."@en.
-:Context rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Context"@en;
-    rdfs:comment "The degree to which an explanation incorporates relevant situational information."@en.
-:Coherence rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Coherence"@en;
-    rdfs:comment "The degree to which explanatory elements form a logically understandable whole."@en.
-:Controllability rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "Controllability"@en;
-    rdfs:comment "The degree to which stakeholders can influence, explore, or manipulate the explanation process."@en.
-:ContentDimension rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "ContentDimension"@en;
-    rdfs:comment "The explanation quality dimension concerning the informational content of explanations."@en.
-:UserDimension rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "UserDimension"@en;
-    rdfs:comment "The explanation quality dimension concerning stakeholder interaction and interpretation."@en.
-:PresentationDimension rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "PresentationDimension"@en;
-    rdfs:comment "The explanation quality dimension concerning the presentation and representation of explanations."@en.
-:FidelityPerspective rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "FidelityPerspective"@en;
-    rdfs:comment "An assessment perspective focusing on the faithfulness of explanations to the underlying model."@en.
-:ComprehensibilityPerspective rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "ComprehensibilityPerspective"@en;
-    rdfs:comment "An assessment perspective focusing on the understandability of explanations by stakeholders."@en.
-:ExplanationEvaluationPerspective rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:IntrinsicMode;
-    rdfs:label "ExplanationEvaluationPerspective"@en;
-    rdfs:comment "A perspective from which explanation quality is evaluated."@en.
-:ExplanationGoalPriority rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Relator;
-    rdfs:label "ExplanationGoalPriority"@en;
-    rdfs:comment "A relator representing the priority assigned by a stakeholder to a particular explanation goal."@en.
-:ExplanationTypePriority rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Relator;
-    rdfs:label "ExplanationTypePriority"@en;
-    rdfs:comment "A relator representing the priority assigned by a stakeholder to a particular explanation type."@en.
-:ExplanationQualityPriority rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Relator;
-    rdfs:label "ExplanationQualityPriority"@en;
-    rdfs:comment "A relator representing the priority assigned by a stakeholder to a particular explanation quality criterion."@en.
-:GoalTypeAlignment rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Relator;
-    rdfs:label "GoalTypeAlignment"@en;
-    rdfs:comment "A relator expressing that a particular explanation type is suitable for achieving a particular explanation goal."@en.
-:ModalityAccess rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Relator;
-    rdfs:label "ModalityAccess"@en;
-    rdfs:comment "A relator expressing that a stakeholder can work with or make use of a particular explanation modality."@en.
-:ExplanationModalityPreference rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:Relator;
-    rdfs:label "ExplanationModalityPreference"@en;
-    rdfs:comment "A relator representing the priority assigned by a stakeholder to a particular explanation modality."@en.
-:KnowledgeLevel rdf:type owl:Class, gufo:AbstractIndividualType, owl:NamedIndividual;
-    rdfs:subClassOf gufo:QualityValue;
-    owl:equivalentClass [
-  rdf:type owl:Class;
-  owl:oneOf (:None :Basic :Intermediate :Advanced :Expert)
-].
-:None rdf:type :KnowledgeLevel;
-    rdfs:label "None".
-:Basic rdf:type :KnowledgeLevel;
-    rdfs:label "Basic".
-:Intermediate rdf:type :KnowledgeLevel;
-    rdfs:label "Intermediate".
-:Advanced rdf:type :KnowledgeLevel;
-    rdfs:label "Advanced".
-:Expert rdf:type :KnowledgeLevel;
-    rdfs:label "Expert".
-:KnowledgeLevel rdfs:label "KnowledgeLevel"@en;
-    rdfs:comment "An ordinal scale used to characterise the level of stakeholder knowledge."@en.
-:DomainKnowledge rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "DomainKnowledge"@en;
-    rdfs:comment "Knowledge concerning the application domain in which the AI system is deployed."@en.
-:TechnicalKnowledge rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "TechnicalKnowledge"@en;
-    rdfs:comment "Knowledge concerning AI, machine learning, data science, or explainable AI techniques."@en.
-:Knowledge rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:IntrinsicMode;
-    rdfs:label "Knowledge"@en;
-    rdfs:comment "Knowledge possessed by a person that influences the interpretation and usefulness of explanations."@en.
-:Domain rdf:type owl:Class, gufo:Kind, owl:NamedIndividual;
-    rdfs:subClassOf gufo:FunctionalComplex;
-    rdfs:label "Domain"@en;
-    rdfs:comment "An area of application or subject matter about which a person can hold knowledge."@en.
-:MLDomain rdf:type owl:Class, gufo:SubKind, owl:NamedIndividual;
-    rdfs:label "MLDomain"@en;
-    rdfs:comment "A domain concerning machine learning, about which technical knowledge is held."@en.
-:isAbout rdfs:subPropertyOf :isAbout_1.
-:CaseBasedExplanation rdfs:subClassOf EPO:Explanation.
-:ResponsibilityExplanation rdfs:subClassOf EPO:Explanation.
-:EverydayExplanation rdfs:subClassOf EPO:Explanation.
-:ContextualExplanation rdfs:subClassOf EPO:Explanation.
-:ContrastiveExplanation rdfs:subClassOf EPO:Explanation.
-:RationaleExplanation rdfs:subClassOf EPO:Explanation.
-:StatisticalExplanation rdfs:subClassOf EPO:Explanation.
-:CounterfactualExplanation rdfs:subClassOf EPO:Explanation.
-:ScientificExplanation rdfs:subClassOf EPO:Explanation.
-:SimulationBasedExplanation rdfs:subClassOf EPO:Explanation.
-:TraceBasedExplanation rdfs:subClassOf EPO:Explanation.
-:SafetyAndPerformanceExplanation rdfs:subClassOf EPO:Explanation.
-:ImpactExplanation rdfs:subClassOf EPO:Explanation.
-:FairnessExplanation rdfs:subClassOf EPO:Explanation.
-:DataExplanation rdfs:subClassOf EPO:Explanation.
-:DecisionSubject rdfs:subClassOf :XAIStakeholder.
-:DomainExpert rdfs:subClassOf :XAIStakeholder.
-:TechnicalCreator rdfs:subClassOf :XAIStakeholder.
-:OperationalUser rdfs:subClassOf :XAIStakeholder.
-:OrganisationalComplianceOverseer rdfs:subClassOf :XAIStakeholder.
-:ResearcherTheorist rdfs:subClassOf :XAIStakeholder.
-:XAIStakeholder rdfs:subClassOf :Person.
-:AuditoryAcuity rdfs:subClassOf :SensoryAbility.
-:VisualAcuity rdfs:subClassOf :SensoryAbility.
-:FidelityPerspective rdfs:subClassOf :ExplanationEvaluationPerspective.
-:ComprehensibilityPerspective rdfs:subClassOf :ExplanationEvaluationPerspective.
-:UserDimension rdfs:subClassOf :ExplanationQuality.
-:PresentationDimension rdfs:subClassOf :ExplanationQuality.
-:ContentDimension rdfs:subClassOf :ExplanationQuality.
-:Controllability rdfs:subClassOf :UserDimension.
-:Coherence rdfs:subClassOf :UserDimension.
-:Context rdfs:subClassOf :UserDimension.
-:Compactness rdfs:subClassOf :PresentationDimension.
-:Composition rdfs:subClassOf :PresentationDimension.
-:Confidence rdfs:subClassOf :PresentationDimension.
-:Contrastivity rdfs:subClassOf :ContentDimension.
-:Continuity rdfs:subClassOf :ContentDimension.
-:CovariateComplexity rdfs:subClassOf :ContentDimension.
-:Completeness rdfs:subClassOf :ContentDimension.
-:Correctness rdfs:subClassOf :ContentDimension.
-:Consistency rdfs:subClassOf :ContentDimension.
-:TechnicalKnowledge rdfs:subClassOf :Knowledge.
-:DomainKnowledge rdfs:subClassOf :Knowledge.
-:MLDomain rdfs:subClassOf :Domain.
-:evaluationContext rdfs:domain :ExplanationEvaluationMetric;
-    rdfs:range :ContextualityLevel;
-    rdf:type owl:ObjectProperty;
-    rdfs:subPropertyOf gufo:hasReifiedQualityValue;
-    rdfs:label "evaluationContext"@en;
-    rdfs:comment "Relates an explanation evaluation metric to the contextuality level at which that metric assesses an explanation."@en.
-:desideratumName rdfs:domain :Desideratum;
-    rdfs:range xsd:string;
-    rdf:type owl:DatatypeProperty;
-    rdfs:subPropertyOf gufo:hasQualityValue;
-    rdfs:label "desideratumName"@en;
-    rdfs:comment "Specifies the name by which a desideratum is identified."@en.
-:dimension rdfs:domain :Desideratum;
-    rdf:type owl:DatatypeProperty;
-    rdfs:subPropertyOf gufo:hasQualityValue;
-    rdfs:label "dimension"@en;
-    rdfs:comment "Specifies the dimension under which a desideratum is characterised."@en.
-:format rdfs:domain XMLPO:ExplanationModality;
-    rdfs:range :RepresentationFormat;
-    rdf:type owl:ObjectProperty;
-    rdfs:subPropertyOf gufo:hasReifiedQualityValue;
-    rdfs:label "format"@en;
-    rdfs:comment "Relates an explanation modality to the representation format, such as textual, visual, numerical, or example-based, in which explanations of that modality are presented."@en.
-:status rdfs:domain :SensoryAbility;
-    rdfs:range :FunctionalStatus;
-    rdf:type owl:ObjectProperty;
-    rdfs:subPropertyOf gufo:hasReifiedQualityValue;
-    rdfs:label "status"@en;
-    rdfs:comment "Relates a sensory ability to its functional status, indicating whether the ability is non-functional, impaired, or fully functional."@en.
-:rank_2 rdfs:domain :ExplanationGoalPriority;
-    rdf:type owl:DatatypeProperty;
-    rdfs:subPropertyOf gufo:hasQualityValue;
-    rdfs:label "rank"@en;
-    rdfs:comment "Specifies the position of an explanation goal in the ordering of priorities assigned by a stakeholder."@en.
-:rank_1 rdfs:domain :ExplanationTypePriority;
-    rdf:type owl:DatatypeProperty;
-    rdfs:subPropertyOf gufo:hasQualityValue;
-    rdfs:label "rank"@en;
-    rdfs:comment "Specifies the position of an explanation type in the ordering of priorities assigned by a stakeholder."@en.
-:rank rdfs:domain :ExplanationQualityPriority;
-    rdf:type owl:DatatypeProperty;
-    rdfs:subPropertyOf gufo:hasQualityValue;
-    rdfs:label "rank"@en;
-    rdfs:comment "Specifies the position of an explanation quality criterion in the ordering of priorities assigned by a stakeholder."@en.
-:evidenceSource rdfs:domain :GoalTypeAlignment;
-    rdfs:range xsd:string;
-    rdf:type owl:DatatypeProperty;
-    rdfs:subPropertyOf gufo:hasQualityValue;
-    rdfs:label "evidenceSource"@en;
-    rdfs:comment "Specifies the source of the evidence supporting the alignment between an explanation type and an explanation goal."@en.
-:level rdfs:domain :Knowledge;
-    rdfs:range :KnowledgeLevel;
-    rdf:type owl:ObjectProperty;
-    rdfs:subPropertyOf gufo:hasReifiedQualityValue;
-    rdfs:label "level"@en;
-    rdfs:comment "Relates knowledge held by a stakeholder to the level, on an ordinal scale from none to expert, at which it is held."@en.
-:usesMetric rdf:type owl:ObjectProperty;
-    rdfs:domain :ExplanationEvaluationExecution;
-    rdfs:range :ExplanationEvaluationMetric;
-    rdfs:label "usesMetric"@en;
-    rdfs:comment "Relates an explanation evaluation execution to the explanation evaluation metric that it applies."@en.
-:applicableTo rdf:type owl:ObjectProperty;
-    rdfs:domain :ExplanationEvaluationMetric;
-    rdfs:range :ExplanationQuality;
-    rdfs:label "applicableTo"@en;
-    rdfs:comment "Relates an explanation evaluation metric to the explanation quality criterion that it can be used to assess."@en.
-:producing rdf:type owl:ObjectProperty;
-    rdfs:domain :ExplanationEvaluationExecution;
-    rdfs:range :ExplanationQualityMeasurement;
-    rdfs:label "producing"@en;
-    rdfs:comment "Relates an explanation evaluation execution to the explanation quality measurement that it produces."@en.
-:contributesTo rdf:type owl:ObjectProperty;
-    rdfs:domain :ExplanationEvaluationMetric;
-    rdfs:range :Desideratum;
-    rdfs:label "contributesTo"@en;
-    rdf:type gufo:MaterialRelationshipType;
-    rdfs:comment "Relates an explanation evaluation metric to the desideratum that it helps to assess."@en.
-EPO:Explanation gufo:categorizes :ExplanationType.
-:expresses rdf:type owl:ObjectProperty;
-    rdfs:domain EPO:Explanation;
-    rdfs:range XMLPO:ExplanationArtifact;
-    rdfs:label "expresses"@en;
-	rdfs:comment "Relates an explanation to the explanation artifact through which that explanation is expressed or communicated."@en.
-EPO:explanationHasExplanationEvaluationExecution rdf:type owl:ObjectProperty;
-    rdfs:domain EPO:Explanation;
-    rdfs:range :ExplanationEvaluationExecution;
-    rdfs:comment "Relates an explanation to an explanation evaluation execution in which its quality is assessed."@en.
-EPO:isConceptualizedBy rdf:type owl:ObjectProperty;
-    rdfs:domain EPO:Explanation;
-    rdfs:range DUL:Agent;
-    rdfs:label "isConceptualizedBy"@en;
-    rdfs:comment "Relates an explanation to the agent that conceptualises it."@en.
-:preferredExplanationModalityOf rdf:type owl:ObjectProperty;
-    rdfs:domain :XAIStakeholder;
-    rdfs:range XMLPO:ExplanationModality;
-    rdfs:label "preferredExplanationModalityOf"@en;
-    rdf:type gufo:MaterialRelationshipType;
-    rdfs:comment "Relates an XAI stakeholder to an explanation modality that the stakeholder prefers."@en.
-:preferredExplanationTypeOf rdf:type owl:ObjectProperty;
-    rdfs:domain :XAIStakeholder;
-    rdfs:range :ExplanationType;
-    rdfs:label "preferredExplanationTypeOf"@en;
-    rdf:type gufo:MaterialRelationshipType;
-    rdfs:comment "Relates an XAI stakeholder to an explanation type that the stakeholder prefers."@en.
-:canProcess rdf:type owl:ObjectProperty;
-    rdfs:domain :XAIStakeholder;
-    rdfs:range XMLPO:ExplanationModality;
-    rdfs:label "canProcess"@en;
-    rdf:type gufo:MaterialRelationshipType;
-    rdfs:comment "Relates an XAI stakeholder to an explanation modality that the stakeholder is able to work with or make use of."@en.
-:preferredExplanationGoalOf rdf:type owl:ObjectProperty;
-    rdfs:domain :XAIStakeholder;
-    rdfs:range :ExplanationGoal;
-    rdfs:label "preferredExplanationGoalOf"@en;
-    rdf:type gufo:MaterialRelationshipType;
-    rdfs:comment "Relates an XAI stakeholder to an explanation goal that the stakeholder prefers."@en.
-:supportsAchievementOf rdf:type owl:ObjectProperty;
-    rdfs:domain :ExplanationType;
-    rdfs:range :ExplanationGoal;
-    rdfs:label "supportsAchievementOf"@en;
-    rdf:type gufo:MaterialRelationshipType;
-    rdfs:comment "Relates an explanation type to an explanation goal whose achievement it supports."@en.
-:evaluatesWithRespectTo rdf:type owl:ObjectProperty;
-    rdfs:domain :ExplanationEvaluationPerspective;
-    rdfs:range :ExplanationQuality;
-    rdfs:label "evaluatesWithRespectTo"@en;
-	rdfs:comment "Relates an explanation evaluation perspective to an explanation quality criterion that is considered under that perspective when evaluating an explanation artifact."@en.
-:preferredExplanationQualityOf rdf:type owl:ObjectProperty;
-    rdfs:domain :ExplanationQuality;
-    rdfs:range :XAIStakeholder;
-    rdfs:label "preferredExplanationQualityOf"@en;
-    rdf:type gufo:MaterialRelationshipType;
-    rdfs:comment "Relates an explanation quality criterion to an XAI stakeholder who prefers it."@en.
-EPO:Explanation rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:inheresIn ];
-  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationQualityMeasurement
-].
-:ExplanationQualityMeasurement rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:inheresIn;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass EPO:Explanation
-].
-EPO:Explanans rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:mediates ];
-  owl:someValuesFrom EPO:Explanation
-].
-EPO:Explanation rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass EPO:Explanans
-].
-EPO:Explanandum rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:mediates ];
-  owl:someValuesFrom EPO:Explanation
-].
-EPO:Explanation rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass EPO:Explanandum
-], [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass EPO:Condition
-], [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass DUL:Theory
-].
-:XAIStakeholder rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:participatedIn ];
-  owl:someValuesFrom XMLPO:ExplanationEvaluation
-].
-:SensoryAbility rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:inheresIn ];
-  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :Person
-].
-:Person rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:inheresIn;
-  owl:someValuesFrom :SensoryAbility
-].
-:ExplanationIntention rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:inheresIn;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :XAIStakeholder
-], [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:externallyDependsOn ];
-  owl:someValuesFrom :ExplanationGoal
-].
-:ExplanationGoal rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:externallyDependsOn;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationIntention
-].
-:XAIStakeholder rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty :preferredExplanationGoalOf;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationGoal
-].
-:ExplanationGoal rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:inheresIn ];
-  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :XAIStakeholder
-].
-:XAIStakeholder rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:inheresIn;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationGoal
-].
-XMLPO:ExplanationEvaluation rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:participatedIn ];
-  owl:someValuesFrom :ExplanationQuality
-].
-XMLPO:ExplanationArtifact rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:inheresIn;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationQuality
-].
-:XAIStakeholder rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:inheresIn ];
-  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationEvaluationPerspective
-].
-:ExplanationEvaluationPerspective rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:inheresIn;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :XAIStakeholder
-].
-:ExplanationGoalPriority rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :XAIStakeholder
-], [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationGoal
-].
-:ExplanationTypePriority rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :XAIStakeholder
-], [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationType
-].
-:ExplanationQualityPriority rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :XAIStakeholder
-], [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationQuality
-].
-:GoalTypeAlignment rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationType
-], [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :ExplanationGoal
-].
-:ModalityAccess rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass XMLPO:ExplanationModality
-].
-:ExplanationModalityPreference rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass XMLPO:ExplanationModality
-], [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :XAIStakeholder
-].
-:XAIStakeholder rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:mediates ];
-  owl:someValuesFrom :ModalityAccess
-].
-:ModalityAccess rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:mediates;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :XAIStakeholder
-].
-:Person rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty [ owl:inverseOf gufo:inheresIn ];
-  owl:someValuesFrom :Knowledge
-].
-:Knowledge rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:inheresIn;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :Person
-].
-:Domain rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:inheresIn;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :DomainKnowledge
-].
-:MLDomain rdfs:subClassOf [
-  rdf:type owl:Restriction;
-  owl:onProperty gufo:inheresIn;
-  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-  owl:onClass :TechnicalKnowledge
-].
+<http://www.w3id.org/HEXMLPO/ontology> rdf:type owl:Ontology ;
+                                        owl:versionIRI <http://www.w3id.org/HEXMLPO/ontology/1.0> ;
+                                        owl:imports gufo: ,
+                                                    <http://www.w3id.org/xmlpo/ontology> ;
+                                        dcterms:bibliographicCitation "Benckendorff, D.M. (2026). HEXMLPO: Human-centered Explainability extension for the eXplainable Machine Learning Pipeline Ontology. Master's Thesis, University of Twente."@en ;
+                                        dcterms:created "2026-08-31"^^xsd:date ;
+                                        dcterms:creator <https://orcid.org/0009-0000-3872-8046> ;
+                                        dcterms:description "HEXMLPO extends XMLPO with concepts for stakeholder-centred explainability, accessibility, explanation quality, user capabilities, modalities, goals, intentions, and interaction contexts. The ontology supports the modelling, analysis, and evaluation of human-centred explainable AI systems from the perspective of diverse stakeholders and their explainability needs."@en ;
+                                        dcterms:issued "2026-10-22"^^xsd:date ;
+                                        dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+                                        dcterms:publisher <https://ror.org/006hf6230> ;
+                                        dcterms:source <https://www.w3id.org/xmlpo/ontology> ;
+                                        dcterms:title "HEXMLPO: Human-centered Explainability Extension for the eXplainable Machine Learning Pipeline Ontology"@en ;
+                                        bibo:status "draft"@en ;
+                                        vann:preferredNamespacePrefix "hexmlpo" ;
+                                        vann:preferredNamespaceUri "http://www.w3id.org/HEXMLPO/ontology#" ;
+                                        owl:versionInfo "1.0" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/issued
+dcterms:issued rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/source
+dcterms:source rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/ontology/bibo/status
+bibo:status rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#isAbout
+:isAbout rdf:type owl:AnnotationProperty ;
+         rdfs:subPropertyOf :isAbout_1 .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#isAbout_1
+:isAbout_1 rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.w3id.org/HEXMLPO/ontology#applicableTo
+:applicableTo rdf:type owl:ObjectProperty ;
+              rdfs:domain :ExplanationEvaluationMetric ;
+              rdfs:range :ExplanationQuality ;
+              rdfs:comment "Relates an explanation evaluation metric to the explanation quality criterion that it can be used to assess."@en ;
+              rdfs:label "applicableTo"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#canProcess
+:canProcess rdf:type owl:ObjectProperty ;
+            rdfs:domain :XAIStakeholder ;
+            rdfs:range XMLPO:ExplanationModality .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#concernsExplanationType
+:concernsExplanationType rdf:type owl:ObjectProperty ;
+            rdfs:domain [
+				rdf:type owl:Class ;
+				owl:unionOf (
+					:ExplanationTypePriority
+					:TypeGoalAlignment
+				)
+		   ] ;
+           rdfs:range :ExplanationType ;
+           rdfs:comment "Relates an explanation type priority relator to a higher-order explanation type."@en ;
+           rdfs:label "concernsExplanationType"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#contributesTo
+:contributesTo rdf:type owl:ObjectProperty ;
+               rdfs:domain :ExplanationEvaluationMetric ;
+               rdfs:range :Desideratum .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#evaluatesWithRespectTo
+:evaluatesWithRespectTo rdf:type owl:ObjectProperty ;
+                        rdfs:domain :ExplanationEvaluationPerspective ;
+                        rdfs:range :ExplanationQuality ;
+                        rdfs:comment "Relates an explanation evaluation perspective to an explanation quality criterion that is considered under that perspective when evaluating an explanation artifact."@en ;
+                        rdfs:label "evaluatesWithRespectTo"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#evaluationContext
+:evaluationContext rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf gufo:hasReifiedQualityValue ;
+                   rdfs:domain :ExplanationEvaluationMetric ;
+                   rdfs:range :ContextualityLevel ;
+                   rdfs:comment "Relates an explanation evaluation metric to the contextuality level at which that metric assesses an explanation."@en ;
+                   rdfs:label "evaluationContext"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#expresses
+:expresses rdf:type owl:ObjectProperty ;
+           rdfs:domain EPO:Explanation ;
+           rdfs:range XMLPO:ExplanationArtifact ;
+           rdfs:comment "Relates an explanation to the explanation artifact through which that explanation is expressed or communicated."@en ;
+           rdfs:label "expresses"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#format
+:format rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf gufo:hasReifiedQualityValue ;
+        rdfs:domain XMLPO:ExplanationModality ;
+        rdfs:range :RepresentationFormat ;
+        rdfs:comment "Relates an explanation modality to the representation format, such as textual, visual, numerical, or example-based, in which explanations of that modality are presented."@en ;
+        rdfs:label "format"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#level
+:level rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf gufo:hasReifiedQualityValue ;
+       rdfs:domain :Knowledge ;
+       rdfs:range :KnowledgeLevel ;
+       rdfs:comment "Relates knowledge held by a stakeholder to the level, on an ordinal scale from none to expert, at which it is held."@en ;
+       rdfs:label "level"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#preferredExplanationGoalOf
+:preferredExplanationGoalOf rdf:type owl:ObjectProperty ;
+                            rdfs:domain :XAIStakeholder ;
+                            rdfs:range :ExplanationGoal .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#preferredExplanationModalityOf
+:preferredExplanationModalityOf rdf:type owl:ObjectProperty ;
+                                rdfs:domain :XAIStakeholder ;
+                                rdfs:range XMLPO:ExplanationModality .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#preferredExplanationQualityOf
+:preferredExplanationQualityOf rdf:type owl:ObjectProperty ;
+                               rdfs:domain :ExplanationQuality ;
+                               rdfs:range :XAIStakeholder .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#preferredExplanationTypeOf
+:preferredExplanationTypeOf rdf:type owl:ObjectProperty ;
+                            rdfs:domain :XAIStakeholder ;
+                            rdfs:range :ExplanationType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#producing
+:producing rdf:type owl:ObjectProperty ;
+           rdfs:domain :ExplanationEvaluationExecution ;
+           rdfs:range :ExplanationQualityMeasurement ;
+           rdfs:comment "Relates an explanation evaluation execution to the explanation quality measurement that it produces."@en ;
+           rdfs:label "producing"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#status
+:status rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf gufo:hasReifiedQualityValue ;
+        rdfs:domain :SensoryAbility ;
+        rdfs:range :FunctionalStatus ;
+        rdfs:comment "Relates a sensory ability to its functional status, indicating whether the ability is non-functional, impaired, or fully functional."@en ;
+        rdfs:label "status"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#supportsAchievementOf
+:supportsAchievementOf rdf:type owl:ObjectProperty ;
+                       rdfs:domain :ExplanationType ;
+                       rdfs:range :ExplanationGoal .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#usesMetric
+:usesMetric rdf:type owl:ObjectProperty ;
+            rdfs:domain :ExplanationEvaluationExecution ;
+            rdfs:range :ExplanationEvaluationMetric ;
+            rdfs:comment "Relates an explanation evaluation execution to the explanation evaluation metric that it applies."@en ;
+            rdfs:label "usesMetric"@en .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#explanationHasExplanationEvaluationExecution
+EPO:explanationHasExplanationEvaluationExecution rdf:type owl:ObjectProperty ;
+                                                 rdfs:domain EPO:Explanation ;
+                                                 rdfs:range :ExplanationEvaluationExecution ;
+                                                 rdfs:comment "Relates an explanation to an explanation evaluation execution in which its quality is assessed."@en .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#isConceptualizedBy
+EPO:isConceptualizedBy rdf:type owl:ObjectProperty ;
+                       rdfs:domain EPO:Explanation ;
+                       rdfs:range DUL:Agent ;
+                       rdfs:comment "Relates an explanation to the agent that conceptualises it."@en ;
+                       rdfs:label "isConceptualizedBy"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.w3id.org/HEXMLPO/ontology#desideratumName
+:desideratumName rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf gufo:hasQualityValue ;
+                 rdfs:domain :Desideratum ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Specifies the name by which a desideratum is identified."@en ;
+                 rdfs:label "desideratumName"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#dimension
+:dimension rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf gufo:hasQualityValue ;
+           rdfs:domain :Desideratum ;
+           rdfs:comment "Specifies the dimension under which a desideratum is characterised."@en ;
+           rdfs:label "dimension"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#evidenceSource
+:evidenceSource rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf gufo:hasQualityValue ;
+                rdfs:domain :GoalTypeAlignment ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Specifies the source of the evidence supporting the alignment between an explanation type and an explanation goal."@en ;
+                rdfs:label "evidenceSource"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#goalRank
+:goalRank rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf gufo:hasQualityValue ;
+        rdfs:domain :ExplanationGoalPriority ;
+        rdfs:comment "Specifies the position of an explanation goal in the ordering of priorities assigned by a stakeholder."@en ;
+        rdfs:label "goalRank"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#typeRank
+:typeRank rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf gufo:hasQualityValue ;
+        rdfs:domain :ExplanationTypePriority ;
+        rdfs:comment "Specifies the position of an explanation type in the ordering of priorities assigned by a stakeholder."@en ;
+        rdfs:label "typeRank"@en .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#qualityRank
+:qualityRank rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf gufo:hasQualityValue ;
+      rdfs:domain :ExplanationQualityPriority ;
+      rdfs:comment "Specifies the position of an explanation quality criterion in the ordering of priorities assigned by a stakeholder."@en ;
+      rdfs:label "qualityRank"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://ontologydesignpatterns.org/ont/dul/DUL.owl#Agent
+DUL:Agent rdf:type owl:Class ;
+          rdfs:subClassOf gufo:FunctionalComplex .
+
+
+###  http://ontologydesignpatterns.org/ont/dul/DUL.owl#Theory
+DUL:Theory rdf:type owl:Class ;
+           rdfs:subClassOf gufo:FunctionalComplex .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#AuditoryAcuity
+:AuditoryAcuity rdf:type owl:Class ;
+                rdfs:subClassOf :SensoryAbility .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#CaseBasedExplanation
+:CaseBasedExplanation rdf:type owl:Class ;
+                      rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Coherence
+:Coherence rdf:type owl:Class ;
+           rdfs:subClassOf :UserDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Compactness
+:Compactness rdf:type owl:Class ;
+             rdfs:subClassOf :PresentationDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Completeness
+:Completeness rdf:type owl:Class ;
+              rdfs:subClassOf :ContentDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Composition
+:Composition rdf:type owl:Class ;
+             rdfs:subClassOf :PresentationDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ComprehensibilityPerspective
+:ComprehensibilityPerspective rdf:type owl:Class ;
+                              rdfs:subClassOf :ExplanationEvaluationPerspective .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Confidence
+:Confidence rdf:type owl:Class ;
+            rdfs:subClassOf :PresentationDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Consistency
+:Consistency rdf:type owl:Class ;
+             rdfs:subClassOf :ContentDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ContentDimension
+:ContentDimension rdf:type owl:Class ;
+                  rdfs:subClassOf :ExplanationQuality .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Context
+:Context rdf:type owl:Class ;
+         rdfs:subClassOf :UserDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ContextualExplanation
+:ContextualExplanation rdf:type owl:Class ;
+                       rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ContextualityLevel
+:ContextualityLevel rdf:type owl:Class ;
+                    owl:equivalentClass [ rdf:type owl:Class ;
+                                          owl:oneOf ( :IExplanansCentric
+                                                      :IIIInputIntervention
+                                                      :IIModelObservation
+                                                      :IVModelIntervention
+                                                      :VAPrioriConstrained
+                                                    )
+                                        ] ;
+                    rdfs:subClassOf gufo:QualityValue .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Continuity
+:Continuity rdf:type owl:Class ;
+            rdfs:subClassOf :ContentDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ContrastiveExplanation
+:ContrastiveExplanation rdf:type owl:Class ;
+                        rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Contrastivity
+:Contrastivity rdf:type owl:Class ;
+               rdfs:subClassOf :ContentDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Controllability
+:Controllability rdf:type owl:Class ;
+                 rdfs:subClassOf :UserDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Correctness
+:Correctness rdf:type owl:Class ;
+             rdfs:subClassOf :ContentDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#CounterfactualExplanation
+:CounterfactualExplanation rdf:type owl:Class ;
+                           rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#CovariateComplexity
+:CovariateComplexity rdf:type owl:Class ;
+                     rdfs:subClassOf :ContentDimension .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DataExplanation
+:DataExplanation rdf:type owl:Class ;
+                 rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DecisionSubject
+:DecisionSubject rdf:type owl:Class ;
+                 rdfs:subClassOf :XAIStakeholder .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Desideratum
+:Desideratum rdf:type owl:Class ;
+             rdfs:subClassOf gufo:FunctionalComplex .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DesideratumName
+:DesideratumName rdf:type owl:Class ;
+                 owl:equivalentClass [ rdf:type owl:Class ;
+                                       owl:oneOf ( :Interpretability
+                                                   :Technical
+                                                 )
+                                     ] ;
+                 rdfs:subClassOf gufo:QualityValue .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Domain
+:Domain rdf:type owl:Class ;
+        rdfs:subClassOf gufo:FunctionalComplex ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty gufo:inheresIn ;
+                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :DomainKnowledge
+                        ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DomainExpert
+:DomainExpert rdf:type owl:Class ;
+              rdfs:subClassOf :XAIStakeholder .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DomainKnowledge
+:DomainKnowledge rdf:type owl:Class ;
+                 rdfs:subClassOf :Knowledge .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#EverydayExplanation
+:EverydayExplanation rdf:type owl:Class ;
+                     rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationEvaluationExecution
+:ExplanationEvaluationExecution rdf:type owl:Class ;
+                                rdfs:subClassOf gufo:Event .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationEvaluationMetric
+:ExplanationEvaluationMetric rdf:type owl:Class ;
+                             rdfs:subClassOf gufo:FunctionalComplex .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationEvaluationPerspective
+:ExplanationEvaluationPerspective rdf:type owl:Class ;
+                                  rdfs:subClassOf gufo:IntrinsicMode ,
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty gufo:inheresIn ;
+                                                    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                    owl:onClass :XAIStakeholder
+                                                  ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationGoal
+:ExplanationGoal rdf:type owl:Class ;
+                 rdfs:subClassOf gufo:IntrinsicMode ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty gufo:externallyDependsOn ;
+                                   owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :ExplanationIntention
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                                  ] ;
+                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                   owl:onClass :XAIStakeholder
+                                 ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationGoalPriority
+:ExplanationGoalPriority rdf:type owl:Class ;
+                         rdfs:subClassOf gufo:Relator ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty gufo:mediates ;
+                                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                           owl:onClass :ExplanationGoal
+                                         ] ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty gufo:mediates ;
+                                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                           owl:onClass :XAIStakeholder
+                                         ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationIntention
+:ExplanationIntention rdf:type owl:Class ;
+                      rdfs:subClassOf gufo:IntrinsicMode ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty [ owl:inverseOf gufo:externallyDependsOn
+                                                       ] ;
+                                        owl:someValuesFrom :ExplanationGoal
+                                      ] ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty gufo:inheresIn ;
+                                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                        owl:onClass :XAIStakeholder
+                                      ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationModalityPreference
+:ExplanationModalityPreference rdf:type owl:Class ;
+                               rdfs:subClassOf gufo:Relator ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty gufo:mediates ;
+                                                 owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onClass :XAIStakeholder
+                                               ] ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty gufo:mediates ;
+                                                 owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onClass XMLPO:ExplanationModality
+                                               ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationQuality
+:ExplanationQuality rdf:type owl:Class ;
+                    rdfs:subClassOf gufo:Quality .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationQualityMeasurement
+:ExplanationQualityMeasurement rdf:type owl:Class ;
+                               rdfs:subClassOf gufo:Quality ,
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty gufo:inheresIn ;
+                                                 owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                 owl:onClass EPO:Explanation
+                                               ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationQualityPriority
+:ExplanationQualityPriority rdf:type owl:Class ;
+                            rdfs:subClassOf gufo:Relator ,
+                                            [ rdf:type owl:Restriction ;
+                                              owl:onProperty gufo:mediates ;
+                                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                              owl:onClass :ExplanationQuality
+                                            ] ,
+                                            [ rdf:type owl:Restriction ;
+                                              owl:onProperty gufo:mediates ;
+                                              owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                              owl:onClass :XAIStakeholder
+                                            ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationType
+:ExplanationType rdf:type owl:Class ;
+                 rdfs:subClassOf gufo:ConcreteIndividualType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationTypePriority
+:ExplanationTypePriority rdf:type owl:Class ;
+                         rdfs:subClassOf gufo:Relator ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty gufo:mediates ;
+                                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                           owl:onClass :XAIStakeholder
+                                         ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#FairnessExplanation
+:FairnessExplanation rdf:type owl:Class ;
+                     rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#FidelityPerspective
+:FidelityPerspective rdf:type owl:Class ;
+                     rdfs:subClassOf :ExplanationEvaluationPerspective .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#FunctionalStatus
+:FunctionalStatus rdf:type owl:Class ;
+                  owl:equivalentClass [ rdf:type owl:Class ;
+                                        owl:oneOf ( :FullyFunctional
+                                                    :Impaired
+                                                    :NonFunctional
+                                                  )
+                                      ] ;
+                  rdfs:subClassOf gufo:QualityValue .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#GoalTypeAlignment
+:GoalTypeAlignment rdf:type owl:Class ;
+                   rdfs:subClassOf gufo:Relator ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty gufo:mediates ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onClass :ExplanationGoal
+                                   ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ImpactExplanation
+:ImpactExplanation rdf:type owl:Class ;
+                   rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Knowledge
+:Knowledge rdf:type owl:Class ;
+           rdfs:subClassOf gufo:IntrinsicMode ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty gufo:inheresIn ;
+                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onClass :Person
+                           ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#KnowledgeLevel
+:KnowledgeLevel rdf:type owl:Class ;
+                owl:equivalentClass [ rdf:type owl:Class ;
+                                      owl:oneOf ( :Advanced
+                                                  :Basic
+                                                  :Expert
+                                                  :Intermediate
+                                                  :None
+                                                )
+                                    ] ;
+                rdfs:subClassOf gufo:QualityValue .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#MLDomain
+:MLDomain rdf:type owl:Class ;
+          rdfs:subClassOf :Domain ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty gufo:inheresIn ;
+                            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :TechnicalKnowledge
+                          ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ModalityAccess
+:ModalityAccess rdf:type owl:Class ;
+                rdfs:subClassOf gufo:Relator ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty gufo:mediates ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :XAIStakeholder
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty gufo:mediates ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass XMLPO:ExplanationModality
+                                ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#OperationalUser
+:OperationalUser rdf:type owl:Class ;
+                 rdfs:subClassOf :XAIStakeholder .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#OrganisationalComplianceOverseer
+:OrganisationalComplianceOverseer rdf:type owl:Class ;
+                                  rdfs:subClassOf :XAIStakeholder .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Person
+:Person rdf:type owl:Class ;
+        rdfs:subClassOf gufo:FunctionalComplex ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty gufo:inheresIn ;
+                          owl:someValuesFrom :SensoryAbility
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                         ] ;
+                          owl:someValuesFrom :Knowledge
+                        ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#PresentationDimension
+:PresentationDimension rdf:type owl:Class ;
+                       rdfs:subClassOf :ExplanationQuality .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#RationaleExplanation
+:RationaleExplanation rdf:type owl:Class ;
+                      rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#RepresentationFormat
+:RepresentationFormat rdf:type owl:Class ;
+                      owl:equivalentClass [ rdf:type owl:Class ;
+                                            owl:oneOf ( :Example
+                                                        :Numerical
+                                                        :Textual
+                                                        :Visual
+                                                      )
+                                          ] ;
+                      rdfs:subClassOf gufo:QualityValue .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ResearcherTheorist
+:ResearcherTheorist rdf:type owl:Class ;
+                    rdfs:subClassOf :XAIStakeholder .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ResponsibilityExplanation
+:ResponsibilityExplanation rdf:type owl:Class ;
+                           rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#SafetyAndPerformanceExplanation
+:SafetyAndPerformanceExplanation rdf:type owl:Class ;
+                                 rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ScientificExplanation
+:ScientificExplanation rdf:type owl:Class ;
+                       rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#SensoryAbility
+:SensoryAbility rdf:type owl:Class ;
+                rdfs:subClassOf gufo:IntrinsicMode ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                                 ] ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :Person
+                                ] .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#SimulationBasedExplanation
+:SimulationBasedExplanation rdf:type owl:Class ;
+                            rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#StatisticalExplanation
+:StatisticalExplanation rdf:type owl:Class ;
+                        rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#TechnicalCreator
+:TechnicalCreator rdf:type owl:Class ;
+                  rdfs:subClassOf :XAIStakeholder .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#TechnicalKnowledge
+:TechnicalKnowledge rdf:type owl:Class ;
+                    rdfs:subClassOf :Knowledge .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#TraceBasedExplanation
+:TraceBasedExplanation rdf:type owl:Class ;
+                       rdfs:subClassOf EPO:Explanation .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#UserDimension
+:UserDimension rdf:type owl:Class ;
+               rdfs:subClassOf :ExplanationQuality .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#VisualAcuity
+:VisualAcuity rdf:type owl:Class ;
+              rdfs:subClassOf :SensoryAbility .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#XAIStakeholder
+:XAIStakeholder rdf:type owl:Class ;
+                rdfs:subClassOf :Person ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf gufo:mediates
+                                                 ] ;
+                                  owl:someValuesFrom :ModalityAccess
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf gufo:participatedIn
+                                                 ] ;
+                                  owl:someValuesFrom XMLPO:ExplanationEvaluation
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty gufo:inheresIn ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :ExplanationGoal
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty :preferredExplanationGoalOf ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :ExplanationGoal
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                                 ] ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :ExplanationEvaluationPerspective
+                                ] .
+
+
+###  http://www.w3id.org/xmlpo/ontology#ExplanationArtifact
+XMLPO:ExplanationArtifact rdf:type owl:Class ;
+                          rdfs:subClassOf gufo:FunctionalComplex ,
+                                          [ rdf:type owl:Restriction ;
+                                            owl:onProperty gufo:inheresIn ;
+                                            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                            owl:onClass :ExplanationQuality
+                                          ] .
+
+
+###  http://www.w3id.org/xmlpo/ontology#ExplanationEvaluation
+XMLPO:ExplanationEvaluation rdf:type owl:Class ;
+                            rdfs:subClassOf gufo:Event ,
+                                            [ rdf:type owl:Restriction ;
+                                              owl:onProperty [ owl:inverseOf gufo:participatedIn
+                                                             ] ;
+                                              owl:someValuesFrom :ExplanationQuality
+                                            ] .
+
+
+###  http://www.w3id.org/xmlpo/ontology#ExplanationModality
+XMLPO:ExplanationModality rdf:type owl:Class ;
+                          rdfs:subClassOf gufo:Quality .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#Condition
+EPO:Condition rdf:type owl:Class ;
+              rdfs:subClassOf gufo:Situation .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#Explanandum
+EPO:Explanandum rdf:type owl:Class ;
+                rdfs:subClassOf gufo:Event ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf gufo:mediates
+                                                 ] ;
+                                  owl:someValuesFrom EPO:Explanation
+                                ] .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#Explanans
+EPO:Explanans rdf:type owl:Class ;
+              rdfs:subClassOf gufo:Event ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty [ owl:inverseOf gufo:mediates
+                                               ] ;
+                                owl:someValuesFrom EPO:Explanation
+                              ] .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#Explanation
+EPO:Explanation rdf:type owl:Class ;
+                rdfs:subClassOf gufo:Relator ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty gufo:mediates ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass DUL:Theory
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty gufo:mediates ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass EPO:Condition
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty gufo:mediates ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass EPO:Explanandum
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty gufo:mediates ;
+                                  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass EPO:Explanans
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                                 ] ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :ExplanationQualityMeasurement
+                                ] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://ontologydesignpatterns.org/ont/dul/DUL.owl#Agent
+DUL:Agent rdf:type owl:NamedIndividual ,
+                   gufo:Category .
+
+
+###  http://ontologydesignpatterns.org/ont/dul/DUL.owl#Theory
+DUL:Theory rdf:type owl:NamedIndividual ,
+                    gufo:Category .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Advanced
+:Advanced rdf:type owl:NamedIndividual ,
+                   :KnowledgeLevel ;
+          rdfs:label "Advanced" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#AuditoryAcuity
+:AuditoryAcuity rdf:type owl:NamedIndividual ,
+                         gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Basic
+:Basic rdf:type owl:NamedIndividual ,
+                :KnowledgeLevel ;
+       rdfs:label "Basic" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#CaseBasedExplanation
+:CaseBasedExplanation rdf:type owl:NamedIndividual ,
+                               gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Coherence
+:Coherence rdf:type owl:NamedIndividual ,
+                    gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Compactness
+:Compactness rdf:type owl:NamedIndividual ,
+                      gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Completeness
+:Completeness rdf:type owl:NamedIndividual ,
+                       gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Composition
+:Composition rdf:type owl:NamedIndividual ,
+                      gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ComprehensibilityPerspective
+:ComprehensibilityPerspective rdf:type owl:NamedIndividual ,
+                                       gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Confidence
+:Confidence rdf:type owl:NamedIndividual ,
+                     gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Consistency
+:Consistency rdf:type owl:NamedIndividual ,
+                      gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ContentDimension
+:ContentDimension rdf:type owl:NamedIndividual ,
+                           gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Context
+:Context rdf:type owl:NamedIndividual ,
+                  gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ContextualExplanation
+:ContextualExplanation rdf:type owl:NamedIndividual ,
+                                gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ContextualityLevel
+:ContextualityLevel rdf:type owl:NamedIndividual ,
+                             gufo:AbstractIndividualType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Continuity
+:Continuity rdf:type owl:NamedIndividual ,
+                     gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ContrastiveExplanation
+:ContrastiveExplanation rdf:type owl:NamedIndividual ,
+                                 gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Contrastivity
+:Contrastivity rdf:type owl:NamedIndividual ,
+                        gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Controllability
+:Controllability rdf:type owl:NamedIndividual ,
+                          gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Correctness
+:Correctness rdf:type owl:NamedIndividual ,
+                      gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#CounterfactualExplanation
+:CounterfactualExplanation rdf:type owl:NamedIndividual ,
+                                    gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#CovariateComplexity
+:CovariateComplexity rdf:type owl:NamedIndividual ,
+                              gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DataExplanation
+:DataExplanation rdf:type owl:NamedIndividual ,
+                          gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DecisionSubject
+:DecisionSubject rdf:type owl:NamedIndividual ,
+                          gufo:Role .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Desideratum
+:Desideratum rdf:type owl:NamedIndividual ,
+                      gufo:Category .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DesideratumName
+:DesideratumName rdf:type owl:NamedIndividual ,
+                          gufo:AbstractIndividualType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Domain
+:Domain rdf:type owl:NamedIndividual ,
+                 gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DomainExpert
+:DomainExpert rdf:type owl:NamedIndividual ,
+                       gufo:Role .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#DomainKnowledge
+:DomainKnowledge rdf:type owl:NamedIndividual ,
+                          gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#EverydayExplanation
+:EverydayExplanation rdf:type owl:NamedIndividual ,
+                              gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Rule
+:Rule rdf:type owl:NamedIndividual ,
+                  :RepresentationFormat ;
+         rdfs:label "Rule" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Expert
+:Expert rdf:type owl:NamedIndividual ,
+                 :KnowledgeLevel ;
+        rdfs:label "Expert" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationEvaluationExecution
+:ExplanationEvaluationExecution rdf:type owl:NamedIndividual ,
+                                         gufo:EventType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationEvaluationMetric
+:ExplanationEvaluationMetric rdf:type owl:NamedIndividual ,
+                                      gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationEvaluationPerspective
+:ExplanationEvaluationPerspective rdf:type owl:NamedIndividual ,
+                                           gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationGoal
+:ExplanationGoal rdf:type owl:NamedIndividual ,
+                          gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationGoalPriority
+:ExplanationGoalPriority rdf:type owl:NamedIndividual ,
+                                  gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationIntention
+:ExplanationIntention rdf:type owl:NamedIndividual ,
+                               gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationModalityPreference
+:ExplanationModalityPreference rdf:type owl:NamedIndividual ,
+                                        gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationQuality
+:ExplanationQuality rdf:type owl:NamedIndividual ,
+                             gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationQualityMeasurement
+:ExplanationQualityMeasurement rdf:type owl:NamedIndividual ,
+                                        gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationQualityPriority
+:ExplanationQualityPriority rdf:type owl:NamedIndividual ,
+                                     gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationType
+:ExplanationType rdf:type owl:NamedIndividual .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ExplanationTypePriority
+:ExplanationTypePriority rdf:type owl:NamedIndividual ,
+                                  gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#FairnessExplanation
+:FairnessExplanation rdf:type owl:NamedIndividual ,
+                              gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#FidelityPerspective
+:FidelityPerspective rdf:type owl:NamedIndividual ,
+                              gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#FullyFunctional
+:FullyFunctional rdf:type owl:NamedIndividual ,
+                          :FunctionalStatus ;
+                 rdfs:label "FullyFunctional" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#FunctionalStatus
+:FunctionalStatus rdf:type owl:NamedIndividual ,
+                           gufo:AbstractIndividualType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#GoalTypeAlignment
+:GoalTypeAlignment rdf:type owl:NamedIndividual ,
+                            gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#IExplanansCentric
+:IExplanansCentric rdf:type owl:NamedIndividual ,
+                            :ContextualityLevel ;
+                   rdfs:label "IExplanansCentric" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#IIIInputIntervention
+:IIIInputIntervention rdf:type owl:NamedIndividual ,
+                               :ContextualityLevel ;
+                      rdfs:label "IIIInputIntervention" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#IIModelObservation
+:IIModelObservation rdf:type owl:NamedIndividual ,
+                             :ContextualityLevel ;
+                    rdfs:label "IIModelObservation" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#IVModelIntervention
+:IVModelIntervention rdf:type owl:NamedIndividual ,
+                              :ContextualityLevel ;
+                     rdfs:label "IVModelIntervention" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ImpactExplanation
+:ImpactExplanation rdf:type owl:NamedIndividual ,
+                            gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Impaired
+:Impaired rdf:type owl:NamedIndividual ,
+                   :FunctionalStatus ;
+          rdfs:label "Impaired" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Intermediate
+:Intermediate rdf:type owl:NamedIndividual ,
+                       :KnowledgeLevel ;
+              rdfs:label "Intermediate" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Interpretability
+:Interpretability rdf:type owl:NamedIndividual ,
+                           :DesideratumName ;
+                  rdfs:label "Interpretability" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Knowledge
+:Knowledge rdf:type owl:NamedIndividual ,
+                    gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#KnowledgeLevel
+:KnowledgeLevel rdf:type owl:NamedIndividual ,
+                         gufo:AbstractIndividualType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#MLDomain
+:MLDomain rdf:type owl:NamedIndividual ,
+                   gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ModalityAccess
+:ModalityAccess rdf:type owl:NamedIndividual ,
+                         gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#NonFunctional
+:NonFunctional rdf:type owl:NamedIndividual ,
+                        :FunctionalStatus ;
+               rdfs:label "NonFunctional" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#None
+:None rdf:type owl:NamedIndividual ,
+               :KnowledgeLevel ;
+      rdfs:label "None" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Numerical
+:Numerical rdf:type owl:NamedIndividual ,
+                    :RepresentationFormat ;
+           rdfs:label "Numerical" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#OperationalUser
+:OperationalUser rdf:type owl:NamedIndividual ,
+                          gufo:Role .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#OrganisationalComplianceOverseer
+:OrganisationalComplianceOverseer rdf:type owl:NamedIndividual ,
+                                           gufo:Role .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Person
+:Person rdf:type owl:NamedIndividual ,
+                 gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#PresentationDimension
+:PresentationDimension rdf:type owl:NamedIndividual ,
+                                gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#RationaleExplanation
+:RationaleExplanation rdf:type owl:NamedIndividual ,
+                               gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#RepresentationFormat
+:RepresentationFormat rdf:type owl:NamedIndividual ,
+                               gufo:AbstractIndividualType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ResearcherTheorist
+:ResearcherTheorist rdf:type owl:NamedIndividual ,
+                             gufo:Role .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ResponsibilityExplanation
+:ResponsibilityExplanation rdf:type owl:NamedIndividual ,
+                                    gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#SafetyAndPerformanceExplanation
+:SafetyAndPerformanceExplanation rdf:type owl:NamedIndividual ,
+                                          gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#ScientificExplanation
+:ScientificExplanation rdf:type owl:NamedIndividual ,
+                                gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#SensoryAbility
+:SensoryAbility rdf:type owl:NamedIndividual ,
+                         gufo:Kind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#SimulationBasedExplanation
+:SimulationBasedExplanation rdf:type owl:NamedIndividual ,
+                                     gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#StatisticalExplanation
+:StatisticalExplanation rdf:type owl:NamedIndividual ,
+                                 gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Technical
+:Technical rdf:type owl:NamedIndividual ,
+                    :DesideratumName ;
+           rdfs:label "Technical" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#TechnicalCreator
+:TechnicalCreator rdf:type owl:NamedIndividual ,
+                           gufo:Role .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#TechnicalKnowledge
+:TechnicalKnowledge rdf:type owl:NamedIndividual ,
+                             gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Textual
+:Textual rdf:type owl:NamedIndividual ,
+                  :RepresentationFormat ;
+         rdfs:label "Textual" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#TraceBasedExplanation
+:TraceBasedExplanation rdf:type owl:NamedIndividual ,
+                                gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#UserDimension
+:UserDimension rdf:type owl:NamedIndividual ,
+                        gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#VAPrioriConstrained
+:VAPrioriConstrained rdf:type owl:NamedIndividual ,
+                              :ContextualityLevel ;
+                     rdfs:label "VAPrioriConstrained" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#Visual
+:Visual rdf:type owl:NamedIndividual ,
+                 :RepresentationFormat ;
+        rdfs:label "Visual" .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#VisualAcuity
+:VisualAcuity rdf:type owl:NamedIndividual ,
+                       gufo:SubKind .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#XAIStakeholder
+:XAIStakeholder rdf:type owl:NamedIndividual ,
+                         gufo:Role .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#canProcess
+:canProcess rdf:type owl:NamedIndividual ,
+                     gufo:MaterialRelationshipType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#contributesTo
+:contributesTo rdf:type owl:NamedIndividual ,
+                        gufo:MaterialRelationshipType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#preferredExplanationGoalOf
+:preferredExplanationGoalOf rdf:type owl:NamedIndividual ,
+                                     gufo:MaterialRelationshipType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#preferredExplanationModalityOf
+:preferredExplanationModalityOf rdf:type owl:NamedIndividual ,
+                                         gufo:MaterialRelationshipType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#preferredExplanationQualityOf
+:preferredExplanationQualityOf rdf:type owl:NamedIndividual ,
+                                        gufo:MaterialRelationshipType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#preferredExplanationTypeOf
+:preferredExplanationTypeOf rdf:type owl:NamedIndividual ,
+                                     gufo:MaterialRelationshipType .
+
+
+###  http://www.w3id.org/HEXMLPO/ontology#supportsAchievementOf
+:supportsAchievementOf rdf:type owl:NamedIndividual ,
+                                gufo:MaterialRelationshipType .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#Condition
+EPO:Condition rdf:type owl:NamedIndividual ,
+                       gufo:SituationType .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#Explanandum
+EPO:Explanandum rdf:type owl:NamedIndividual ,
+                         gufo:EventType .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#Explanans
+EPO:Explanans rdf:type owl:NamedIndividual ,
+                       gufo:EventType .
+
+
+###  https://raw.githubusercontent.com/tetherless-world/explanation-ontology/refs/heads/master/Ontologies/explanations-pattern-ontology.owl#Explanation
+EPO:Explanation rdf:type owl:NamedIndividual ,
+                         gufo:Kind .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+DUL:Agent rdfs:comment "An entity, physical or social, that can act intentionally and that conceptualises an explanation."@en ;
+          rdfs:label "Agent"@en .
+
+
+DUL:Theory rdfs:comment "A set of general assumptions or principles used to describe or account for phenomena, on which an explanation relies."@en ;
+           rdfs:label "Theory"@en .
+
+
+:AuditoryAcuity rdfs:comment "A sensory ability concerning the sharpness and clarity of a person's hearing."@en ;
+                rdfs:label "AuditoryAcuity"@en .
+
+
+:CaseBasedExplanation rdfs:comment "An explanation that supports a conclusion by presenting actual prior cases that are similar to the one being explained."@en ;
+                      rdfs:label "CaseBasedExplanation"@en .
+
+
+:Coherence rdfs:comment "The degree to which explanatory elements form a logically understandable whole."@en ;
+           rdfs:label "Coherence"@en .
+
+
+:Compactness rdfs:comment "The degree to which an explanation conveys information concisely."@en ;
+             rdfs:label "Compactness"@en .
+
+
+:Completeness rdfs:comment "The degree to which an explanation contains all information required for its intended purpose."@en ;
+              rdfs:label "Completeness"@en .
+
+
+:Composition rdfs:comment "The degree to which explanatory information is organised and structured effectively."@en ;
+             rdfs:label "Composition"@en .
+
+
+:ComprehensibilityPerspective rdfs:comment "An assessment perspective focusing on the understandability of explanations by stakeholders."@en ;
+                              rdfs:label "ComprehensibilityPerspective"@en .
+
+
+:Confidence rdfs:comment "The degree to which an explanation conveys certainty or evidential strength."@en ;
+            rdfs:label "Confidence"@en .
+
+
+:Consistency rdfs:comment "The degree to which similar situations yield coherent and non-contradictory explanations."@en ;
+             rdfs:label "Consistency"@en .
+
+
+:ContentDimension rdfs:comment "The explanation quality dimension concerning the informational content of explanations."@en ;
+                  rdfs:label "ContentDimension"@en .
+
+
+:Context rdfs:comment "The degree to which an explanation incorporates relevant situational information."@en ;
+         rdfs:label "Context"@en .
+
+
+:ContextualExplanation rdfs:comment "An explanation that draws on information beyond the explicit inputs and outputs, such as the user, the situation, and the wider environment."@en ;
+                       rdfs:label "ContextualExplanation"@en .
+
+
+:ContextualityLevel rdfs:comment "An ordinal scale characterising the context in which an evaluation metric assesses an explanation: explanans-centric, model observation, input intervention, model intervention, or a priori constrained."@en ;
+                    rdfs:label "ContextualityLevel"@en .
+
+
+:Continuity rdfs:comment "The degree to which small changes in inputs produce proportionate changes in explanations."@en ;
+            rdfs:label "Continuity"@en .
+
+
+:ContrastiveExplanation rdfs:comment "An explanation that accounts for why one outcome occurred instead of a specific alternative outcome."@en ;
+                        rdfs:label "ContrastiveExplanation"@en .
+
+
+:Contrastivity rdfs:comment "The degree to which an explanation highlights why one outcome occurred instead of an alternative."@en ;
+               rdfs:label "Contrastivity"@en .
+
+
+:Controllability rdfs:comment "The degree to which stakeholders can influence, explore, or manipulate the explanation process."@en ;
+                 rdfs:label "Controllability"@en .
+
+
+:Correctness rdfs:comment "The degree to which an explanation accurately reflects the underlying system behaviour."@en ;
+             rdfs:label "Correctness"@en .
+
+
+:CounterfactualExplanation rdfs:comment "An explanation describing which outcome would have resulted had the inputs been different."@en ;
+                           rdfs:label "CounterfactualExplanation"@en .
+
+
+:CovariateComplexity rdfs:comment "The degree of complexity associated with the variables, features, or factors used in an explanation."@en ;
+                     rdfs:label "CovariateComplexity"@en .
+
+
+:DataExplanation rdfs:comment "An explanation describing which data were used to train, test, and reach a decision in an AI system, and how they were used."@en ;
+                 rdfs:label "DataExplanation"@en .
+
+
+:DecisionSubject rdfs:comment "A stakeholder who is directly affected by a decision or prediction produced by an ML model."@en ;
+                 rdfs:label "DecisionSubject"@en .
+
+
+:Desideratum rdfs:comment "A property that explanations are desired to satisfy, classified as interpretability or technical, and to which evaluation metrics contribute."@en ;
+             rdfs:label "Desideratum"@en .
+
+
+:DesideratumName rdfs:comment "An enumeration of the names under which desiderata are classified: interpretability and technical."@en ;
+                 rdfs:label "DesideratumName"@en .
+
+
+:Domain rdfs:comment "An area of application or subject matter about which a person can hold knowledge."@en ;
+        rdfs:label "Domain"@en .
+
+
+:DomainExpert rdfs:comment "A stakeholder possessing expertise about the application domain in which the AI system operates."@en ;
+              rdfs:label "DomainExpert"@en .
+
+
+:DomainKnowledge rdfs:comment "Knowledge concerning the application domain in which the AI system is deployed."@en ;
+                 rdfs:label "DomainKnowledge"@en .
+
+
+:EverydayExplanation rdfs:comment "An explanation that accounts for an outcome through familiar real-world accounts that appeal to the stakeholder's general knowledge and understanding."@en ;
+                     rdfs:label "EverydayExplanation"@en .
+
+
+:ExplanationEvaluationExecution rdfs:comment "An event in which an explanation evaluation metric is applied to an explanation, producing an explanation quality measurement."@en ;
+                                rdfs:label "ExplanationEvaluationExecution"@en .
+
+
+:ExplanationEvaluationMetric rdfs:comment "A measure for assessing an explanation quality, which contributes to a desideratum and is evaluated at a given level of contextuality."@en ;
+                             rdfs:label "ExplanationEvaluationMetric"@en .
+
+
+:ExplanationEvaluationPerspective rdfs:comment "A perspective from which explanation quality is evaluated."@en ;
+                                  rdfs:label "ExplanationEvaluationPerspective"@en .
+
+
+:ExplanationGoal rdfs:comment "A stakeholder objective that motivates the need for an explanation."@en ;
+                 rdfs:label "ExplanationGoal"@en .
+
+
+:ExplanationGoalPriority rdfs:comment "A relator representing the priority assigned by a stakeholder to a particular explanation goal."@en ;
+                         rdfs:label "ExplanationGoalPriority"@en .
+
+
+:ExplanationIntention rdfs:comment "A stakeholder-specific disposition that gives rise to one or more explanation goals."@en ;
+                      rdfs:label "ExplanationIntention"@en .
+
+
+:ExplanationModalityPreference rdfs:comment "A relator representing the priority assigned by a stakeholder to a particular explanation modality."@en ;
+                               rdfs:label "ExplanationModalityPreference"@en .
+
+
+:ExplanationQuality rdfs:comment "A quality attribute used to assess the effectiveness or suitability of an explanation artifact."@en ;
+                    rdfs:label "ExplanationQuality"@en .
+
+
+:ExplanationQualityMeasurement rdfs:comment "A quality of an explanation that records the outcome of measuring it with an explanation evaluation metric."@en ;
+                               rdfs:label "ExplanationQualityMeasurement"@en .
+
+
+:ExplanationQualityPriority rdfs:comment "A relator representing the priority assigned by a stakeholder to a particular explanation quality criterion."@en ;
+                            rdfs:label "ExplanationQualityPriority"@en .
+
+
+:ExplanationType rdfs:comment "A category of explanation that characterises the form or reasoning pattern expressed by an explanation artifact."@en ;
+                 rdfs:label "ExplanationType"@en .
+
+
+:ExplanationTypePriority rdfs:comment "A relator representing the priority assigned by a stakeholder to a particular explanation type."@en ;
+                         rdfs:label "ExplanationTypePriority"@en .
+
+
+:FairnessExplanation rdfs:comment "An explanation describing the steps taken to ensure that an AI-supported decision is unbiased and treats individuals equitably."@en ;
+                     rdfs:label "FairnessExplanation"@en .
+
+
+:FidelityPerspective rdfs:comment "An assessment perspective focusing on the faithfulness of explanations to the underlying model."@en ;
+                     rdfs:label "FidelityPerspective"@en .
+
+
+:FunctionalStatus rdfs:comment "An enumeration of the degrees to which a sensory ability functions: non-functional, impaired, or fully functional."@en ;
+                  rdfs:label "FunctionalStatus"@en .
+
+
+:GoalTypeAlignment rdfs:comment "A relator expressing that a particular explanation type is suitable for achieving a particular explanation goal."@en ;
+                   rdfs:label "GoalTypeAlignment"@en .
+
+
+:ImpactExplanation rdfs:comment "An explanation describing the effects that the use of an AI system and its decisions has, or may have, on individuals and on society."@en ;
+                   rdfs:label "ImpactExplanation"@en .
+
+
+:Knowledge rdfs:comment "Knowledge possessed by a person that influences the interpretation and usefulness of explanations."@en ;
+           rdfs:label "Knowledge"@en .
+
+
+:KnowledgeLevel rdfs:comment "An ordinal scale used to characterise the level of stakeholder knowledge."@en ;
+                rdfs:label "KnowledgeLevel"@en .
+
+
+:MLDomain rdfs:comment "A domain concerning machine learning, about which technical knowledge is held."@en ;
+          rdfs:label "MLDomain"@en .
+
+
+:ModalityAccess rdfs:comment "A relator expressing that a stakeholder can work with or make use of a particular explanation modality."@en ;
+                rdfs:label "ModalityAccess"@en .
+
+
+:OperationalUser rdfs:comment "A stakeholder who uses the outputs of an AI system during operational decision making."@en ;
+                 rdfs:label "OperationalUser"@en .
+
+
+:OrganisationalComplianceOverseer rdfs:comment "A stakeholder responsible for governance, compliance, auditing, or regulatory oversight of AI systems."@en ;
+                                  rdfs:label "OrganisationalComplianceOverseer"@en .
+
+
+:Person rdfs:comment "A human being who may take on stakeholder roles and who possesses knowledge and sensory abilities."@en ;
+        rdfs:label "Person"@en .
+
+
+:PresentationDimension rdfs:comment "The explanation quality dimension concerning the presentation and representation of explanations."@en ;
+                       rdfs:label "PresentationDimension"@en .
+
+
+:RationaleExplanation rdfs:comment "An explanation stating the reasons that led to an AI-supported decision, expressed in an accessible and understandable way."@en ;
+                      rdfs:label "RationaleExplanation"@en .
+
+
+:RepresentationFormat rdfs:comment "An enumeration of the formats in which an explanation can be represented: textual, visual, numerical, or example-based."@en ;
+                      rdfs:label "RepresentationFormat"@en .
+
+
+:ResearcherTheorist rdfs:comment "A stakeholder interested in advancing scientific understanding of AI, XAI, or explanatory phenomena."@en ;
+                    rdfs:label "ResearcherTheorist"@en .
+
+
+:ResponsibilityExplanation rdfs:comment "An explanation identifying who is involved in developing, managing, and operating an AI system, and whom to contact for human review of a decision."@en ;
+                           rdfs:label "ResponsibilityExplanation"@en .
+
+
+:SafetyAndPerformanceExplanation rdfs:comment "An explanation describing the steps taken to maximise the accuracy, reliability, security, and safety of the outputs and behaviour of an AI system."@en ;
+                                 rdfs:label "SafetyAndPerformanceExplanation"@en .
+
+
+:ScientificExplanation rdfs:comment "An explanation that supports a conclusion by referring to the results of the scientific method, such as findings from rigorous, peer-reviewed studies."@en ;
+                       rdfs:label "ScientificExplanation"@en .
+
+
+:SensoryAbility rdfs:comment "A capacity of a person to perceive information through a sense, such as vision or hearing, which determines the explanation modalities the person can make use of."@en ;
+                rdfs:label "SensoryAbility"@en .
+
+
+:SimulationBasedExplanation rdfs:comment "An explanation that relies on an imitation of a system or process and on the results that emerge from running it on similar inputs."@en ;
+                            rdfs:label "SimulationBasedExplanation"@en .
+
+
+:StatisticalExplanation rdfs:comment "An explanation that conveys statistical or probabilistic evidence, such as the uncertainty or likelihood associated with an output."@en ;
+                        rdfs:label "StatisticalExplanation"@en .
+
+
+:TechnicalCreator rdfs:comment "A stakeholder responsible for developing, maintaining, or validating AI or XAI systems."@en ;
+                  rdfs:label "TechnicalCreator"@en .
+
+
+:TechnicalKnowledge rdfs:comment "Knowledge concerning AI, machine learning, data science, or explainable AI techniques."@en ;
+                    rdfs:label "TechnicalKnowledge"@en .
+
+
+:TraceBasedExplanation rdfs:comment "An explanation that presents the sequence of steps, including data sources and logic, by which a system arrived at a specific result."@en ;
+                       rdfs:label "TraceBasedExplanation"@en .
+
+
+:UserDimension rdfs:comment "The explanation quality dimension concerning stakeholder interaction and interpretation."@en ;
+               rdfs:label "UserDimension"@en .
+
+
+:VisualAcuity rdfs:comment "A sensory ability concerning the sharpness and clarity of a person's vision."@en ;
+              rdfs:label "VisualAcuity"@en .
+
+
+:XAIStakeholder rdfs:comment "A person who interacts with, consumes, develops, governs, evaluates, or is affected by explanations generated by an XAI system."@en ;
+                rdfs:label "XAIStakeholder"@en .
+
+
+:canProcess rdfs:comment "Relates an XAI stakeholder to an explanation modality that the stakeholder is able to work with or make use of."@en ;
+            rdfs:label "canProcess"@en .
+
+
+:contributesTo rdfs:comment "Relates an explanation evaluation metric to the desideratum that it helps to assess."@en ;
+               rdfs:label "contributesTo"@en .
+
+
+:preferredExplanationGoalOf rdfs:comment "Relates an XAI stakeholder to an explanation goal that the stakeholder prefers."@en ;
+                            rdfs:label "preferredExplanationGoalOf"@en .
+
+
+:preferredExplanationModalityOf rdfs:comment "Relates an XAI stakeholder to an explanation modality that the stakeholder prefers."@en ;
+                                rdfs:label "preferredExplanationModalityOf"@en .
+
+
+:preferredExplanationQualityOf rdfs:comment "Relates an explanation quality criterion to an XAI stakeholder who prefers it."@en ;
+                               rdfs:label "preferredExplanationQualityOf"@en .
+
+
+:preferredExplanationTypeOf rdfs:comment "Relates an XAI stakeholder to an explanation type that the stakeholder prefers."@en ;
+                            rdfs:label "preferredExplanationTypeOf"@en .
+
+
+:supportsAchievementOf rdfs:comment "Relates an explanation type to an explanation goal whose achievement it supports."@en ;
+                       rdfs:label "supportsAchievementOf"@en .
+
+
+EPO:Condition rdfs:comment "A situation under which an explanation holds, specifying the circumstances in which an explanans accounts for an explanandum."@en ;
+              rdfs:label "Condition"@en .
+
+
+EPO:Explanandum rdfs:comment "The outcome or phenomenon to be explained, such as a prediction or decision of an ML model."@en ;
+                rdfs:label "Explanandum"@en .
+
+
+EPO:Explanans rdfs:comment "That which does the explaining, namely the reasons or factors that account for an explanandum."@en ;
+              rdfs:label "Explanans"@en .
+
+
+EPO:Explanation rdfs:comment "A relator representing an explanatory relationship between an explanans and an explanandum."@en ;
+                rdfs:label "Explanation"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
