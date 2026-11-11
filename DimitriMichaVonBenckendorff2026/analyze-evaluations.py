@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-analyse_evaluation.py
+analyse_evaluations.py
 ---------------------
-Parse the anonymised expert-evaluation PDF, build tidy data frames, compute
+Parse the anonymised expert evaluation PDF, build tidy data frames, compute
 summary statistics and produce the thesis figures.
 
-Usage:  python analyse_evaluation.py <evaluation.pdf> [output_dir]
+Usage:  python analyse_evaluations.py evaluation.pdf [output_dir]
 """
 import re
 import sys

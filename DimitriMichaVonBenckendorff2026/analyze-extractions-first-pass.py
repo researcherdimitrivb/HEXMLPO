@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""
-RQ1 clustering pipeline: stakeholder types (k=10) and explanation goals (k=20),
-run separately on the SLR, HMI and Both tabs of RQ1-Extraction.xlsx.
+"""RQ1 clustering pipeline: stakeholder types (k=10) and explanation goals (k=20),
+run separately on the SLR, HMI and Both tabs of an extraction-...-pass.xlsx file.
 
 Reconstruction of the pipeline used in the original session
 (load_clean.py + cluster_stakeholders.py + cluster_goals.py + outlier dump).
@@ -17,7 +16,7 @@ Method
 
 Usage
   pip install pandas openpyxl scikit-learn
-  python cluster_analysis.py --path RQ1-Extraction.xlsx --outdir analysis_out
+  python analyze-extractions-first-pass.py --path extraction-first-pass.xlsx --outdir analysis_out
 """
 
 import argparse
