@@ -1,0 +1,400 @@
+#################################################################
+# Architecture-agnostic extension of XMLPO for deep learning
+# models and architectures.
+#################################################################
+
+@prefix : <http://example.org#> .
+@prefix xmlpo: <http://example.org/xmlpo#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# add owl:inverseOf to owl:ObjectProperty instances
+
+#################################################################
+# MODEL
+#################################################################
+
+:DLModel a owl:Class, gufo:Kind ;
+    rdfs:subClassOf xmlpo:MLModel ;
+    rdfs:label "Deep Learning Model"@en ;
+    rdfs:comment "A machine learning model that is realised by a deep neural network." .
+
+:DLModelImplementation a owl:Class, gufo:Kind ;
+    rdfs:subClassOf xmlpo:MLModelImplementation ;
+    rdfs:label "Deep Learning Model Implementation"@en ;
+    rdfs:comment "A concrete realisation of a deep learning model, such as a specific checkpoint of a neural network model with an architecture, weights, and biases loaded into a runtime." .
+
+:DLModelImplementationCharacteristic a owl:Class, gufo:Quality ;
+    rdfs:subClassOf xmlpo:ImplementationCharacteristic ;
+    rdfs:label "Deep Learning Model Implementation Characteristic"@en ;
+    rdfs:comment "A characteristic specific to a deep learning model implementation, such as a framework, numerical precision, and device." .
+
+#################################################################
+# ARCHITECTURE
+#################################################################
+
+:DLModelArchitecture a owl:Class, gufo:FunctionalComplex ;
+    rdfs:label "Deep Learning Model Architecture"@en ;
+    rdfs:comment "The design specification a deep learning model is defined by." ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasLayer ;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:realizesArchitecture a owl:ObjectProperty ;
+    rdfs:domain :DLModelImplementation ;
+    rdfs:range :DLModelArchitecture ;
+    rdfs:label "realizes architecture"@en .
+
+:hasArchitecture a owl:ObjectProperty ;
+    rdfs:domain :DLModelImplementation ;
+    rdfs:range :DLModelArchitecture ;
+    rdfs:label "has architecture"@en ;
+    rdfs:comment "A concrete implementation realizes a particular architecture."@en .
+
+#################################################################
+# LAYER
+#################################################################
+
+:NeuralNetworkLayer a owl:Class, gufo:FunctionalComplex ;
+	rdfs:subClassOf [
+			a owl:Restriction ;
+			owl:onProperty gufo:isComponentOf ;
+			owl:someValuesFrom :DLModelArchitecture
+	] ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isLayerOf ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasNeuron ;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+	rdfs:label "Neural Network Layer"@en ;
+    rdfs:comment "The design specification a single layer in a deep learning model is defined by. This is a component of a deep learning model architecture." .
+
+:hasLayer a owl:ObjectProperty, owl:InverseFunctionalProperty ;
+    rdfs:subPropertyOf gufo:hasComponent ;
+    rdfs:domain :DLModelArchitecture ;
+    rdfs:range :NeuralNetworkLayer ;
+    rdfs:label "has neural network layer"@en ;
+    owl:inverseOf :isLayerOf .
+
+:isLayerOf a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain :NeuralNetworkLayer ;
+    rdfs:range :DLModelArchitecture ;
+    rdfs:label "is neural network layer of"@en .
+
+:DenseLayer a owl:Class, gufo:SubKind ;
+    rdfs:subClassOf :NeuralNetworkLayer ;
+    rdfs:label "Dense Layer"@en .
+
+:ConvolutionalLayer a owl:Class, gufo:SubKind ;
+    rdfs:subClassOf :NeuralNetworkLayer ;
+    rdfs:label "Convolutional Layer"@en .
+
+:AttentionLayer a owl:Class, gufo:SubKind ;
+    rdfs:subClassOf :NeuralNetworkLayer ;
+    rdfs:label "Attention Layer"@en .
+
+:ResidualLayer a owl:Class, gufo:SubKind ;
+    rdfs:subClassOf :NeuralNetworkLayer ;
+    rdfs:label "Residual Layer"@en .
+
+:NormalizationLayer a owl:Class, gufo:SubKind ;
+    rdfs:subClassOf :NeuralNetworkLayer ;
+    rdfs:label "Normalization Layer"@en .
+
+:RecurrentLayer a owl:Class, gufo:SubKind ;
+    rdfs:subClassOf :NeuralNetworkLayer ;
+    rdfs:label "Recurrent Layer"@en .
+
+#################################################################
+# NEURON
+#################################################################
+
+:ArtificialNeuron a owl:Class, gufo:FunctionalComplex ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:isComponentOf ;
+        owl:someValuesFrom :NeuralNetworkLayer
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isNeuronOf ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+	rdfs:label "Artificial Neuron"@en ;
+    rdfs:comment "The design specification a single neuron in a single layer in a deep learning model is defined by. This is a component of a neural network layer of a deep learning model architecture." .
+
+:hasNeuron a owl:ObjectProperty, owl:InverseFunctionalProperty ;
+    rdfs:subPropertyOf gufo:hasComponent ;
+    rdfs:domain :NeuralNetworkLayer ;
+    rdfs:range :ArtificialNeuron ;
+    rdfs:label "has artificial neuron"@en ;
+    owl:inverseOf :isNeuronOf .
+
+:isNeuronOf a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:domain :ArtificialNeuron ;
+    rdfs:range :NeuralNetworkLayer ;
+    rdfs:label "is artificial neuron of"@en .
+
+#################################################################
+# CONNECTIONS
+#################################################################
+
+:SynapticConnection a owl:Class, gufo:Relator ;
+    rdfs:label "Synaptic Connection"@en ;
+    rdfs:comment "A relator that connects a source artificial neuron to a target artificial neuron, existentially depending on and mediating both." .
+
+:hasSourceNeuron a owl:ObjectProperty ;
+    rdfs:subPropertyOf gufo:mediates ;
+    rdfs:domain :SynapticConnection ;
+    rdfs:range :ArtificialNeuron ;
+    rdfs:label "has source neuron"@en ;
+    rdfs:comment "Relates a synaptic connection to the artificial neuron the connection originates from." .
+
+:hasTargetNeuron a owl:ObjectProperty ;
+    rdfs:subPropertyOf gufo:mediates ;
+    rdfs:domain :SynapticConnection ;
+    rdfs:range :ArtificialNeuron ;
+    rdfs:label "has target neuron"@en ;
+    rdfs:comment "Relates a synaptic connection to the artificial neuron the connection terminates at." .
+
+#################################################################
+# PARAMETERS (unified hierarchy for weights & biases)
+#################################################################
+
+:ModelParameter a owl:Class, gufo:FunctionalComplex ;
+    rdfs:label "Model Parameter"@en ;
+    rdfs:comment "A learnable or non-learnable parameter of a deep learning model (weight, bias, buffer, …)."@en .
+
+:WeightParameter a owl:Class, gufo:SubKind ;
+    rdfs:subClassOf :ModelParameter ;
+    rdfs:label "Weight Parameter"@en .
+
+:BiasParameter a owl:Class, gufo:SubKind ;
+    rdfs:subClassOf :ModelParameter ;
+    rdfs:label "Bias Parameter"@en .
+
+:BufferParameter a owl:Class, gufo:SubKind ;
+    rdfs:subClassOf :ModelParameter ;
+    rdfs:label "Buffer Parameter"@en ;
+    rdfs:comment "Non-trainable state (e.g. running mean/variance of BatchNorm)."@en .
+
+:isTrainable a owl:DatatypeProperty ;
+    rdfs:domain :ModelParameter ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "is trainable"@en .
+
+:hasParameter a owl:ObjectProperty ;
+    rdfs:range :ModelParameter ;
+    rdfs:label "has parameter"@en ;
+    rdfs:comment "Generic relation from any architectural element or weight aggregate to the parameters that belong to it."@en .
+
+:isParameterOf a owl:ObjectProperty ;
+    owl:inverseOf :hasParameter ;
+    rdfs:domain :ModelParameter ;
+    rdfs:label "is parameter of"@en .
+
+#################################################################
+# CONNECTION WEIGHT (Quality of the Relator)
+#################################################################
+
+:ConnectionWeight a owl:Class, gufo:Quality ;
+	rdfs:subClassOf :ModelParameter ;
+    rdfs:subClassOf gufo:Quality ;
+    rdfs:label "Connection Weight"@en ;
+    rdfs:comment "A quality of a synaptic connection representing the strength of the connection between its source and target neurons." .
+
+:weightOfConnection a owl:ObjectProperty ;
+    rdfs:subPropertyOf gufo:inheresIn ;
+    rdfs:domain :ConnectionWeight ;
+    rdfs:range :SynapticConnection ;
+    rdfs:label "weight of connection"@en ;
+    rdfs:comment "Relates a connection weight quality to the synaptic connection (relator) it inheres in." .
+
+:weightValue a owl:DatatypeProperty ;
+    rdfs:domain :ConnectionWeight ;
+    rdfs:range xsd:double ;
+    rdfs:label "weight value"@en ;
+    rdfs:comment "The quale (numeric value) of a connection weight quality." .
+
+#################################################################
+# WEIGHT AGGREGATES
+#################################################################
+
+:DLModelWeights a owl:Class, gufo:FunctionalComplex ;
+    rdfs:label "Model Weights"@en ;
+    rdfs:comment "The complete set of learned weights of a deep learning model, mereologically composed of the weights of its layers." ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasLayerWeights ;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] .
+
+:hasWeights a owl:ObjectProperty ;
+    rdfs:domain :DLModelImplementation ;
+    rdfs:range :DLModelWeights ;
+    rdfs:label "has model weights"@en ;
+    rdfs:comment "Relates a deep learning model to the complete set of weights it has." .
+
+:LayerWeights a owl:Class, gufo:FunctionalComplex ;
+	rdfs:subClassOf :ModelParameter ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:isComponentOf ;
+        owl:someValuesFrom :DLModelWeights
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isLayerWeightsOf ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasNeuronWeight ;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:label "Layer Weights"@en ;
+    rdfs:comment "The weights of a single neural network layer. This is a component of the model's complete set of weights." .
+
+:hasLayerWeights a owl:ObjectProperty, owl:InverseFunctionalProperty ;
+    rdfs:subPropertyOf gufo:hasComponent ;
+    rdfs:domain :DLModelWeights ;
+    rdfs:range :LayerWeights ;
+    rdfs:label "has layer weights"@en ;
+    owl:inverseOf :isLayerWeightsOf .
+
+:isLayerWeightsOf a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:subPropertyOf gufo:isComponentOf ;
+    rdfs:domain :LayerWeights ;
+    rdfs:range :DLModelWeights ;
+    rdfs:label "is layer weights of"@en .
+
+:NeuronWeight a owl:Class, gufo:FunctionalComplex ;
+	rdfs:subClassOf :WeightParameter ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:isComponentOf ;
+        owl:someValuesFrom :LayerWeights
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :isNeuronWeightOf ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger
+    ] ;
+    rdfs:label "Neuron Weight"@en ;
+    rdfs:comment "The weight associated with a single artificial neuron. This is a component of its layer's weights." .
+
+:hasNeuronWeight a owl:ObjectProperty, owl:InverseFunctionalProperty ;
+    rdfs:subPropertyOf gufo:hasComponent ;
+    rdfs:domain :LayerWeights ;
+    rdfs:range :NeuronWeight ;
+    rdfs:label "has neuron weight"@en ;
+    owl:inverseOf :isNeuronWeightOf .
+
+:isNeuronWeightOf a owl:ObjectProperty, owl:FunctionalProperty ;
+    rdfs:subPropertyOf gufo:isComponentOf ;
+    rdfs:domain :NeuronWeight ;
+    rdfs:range :LayerWeights ;
+    rdfs:label "is neuron weight of"@en .
+
+:NeuronBias a owl:Class, gufo:Quality ;
+    rdfs:subClassOf :BiasParameter ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:inheresIn ;
+        owl:someValuesFrom :ArtificialNeuron
+    ] ;
+    rdfs:label "Neuron Bias"@en ;
+    rdfs:comment "The bias parameter associated with a single artificial neuron."@en .
+
+:biasValue a owl:DatatypeProperty ;
+    rdfs:domain :NeuronBias ;
+    rdfs:range xsd:double ;
+    rdfs:label "bias value"@en ;
+    rdfs:comment "Pragmatic direct quale of a NeuronBias."@en .
+
+#################################################################
+# RELATING CONNECTIONS AND WEIGHTS
+#################################################################
+
+:aggregatesConnectionWeight a owl:ObjectProperty ;
+    rdfs:domain :NeuronWeight ;
+    rdfs:range :ConnectionWeight ;
+    rdfs:label "aggregates connection weight"@en ;
+    rdfs:comment "Relates a neuron's weights to the connection weight qualities of its incoming synaptic connections." .
+
+:isAggregatedByNeuronWeight a owl:ObjectProperty ;
+    owl:inverseOf :aggregatesConnectionWeight ;
+    rdfs:domain :ConnectionWeight ;
+    rdfs:range :NeuronWeight ;
+    rdfs:label "is aggregated by neuron weight"@en ;
+    rdfs:comment "Relates a neuron's weights to the connection weight qualities of its incoming synaptic connections. Inverse of :aggregatesConnectionWeight." .
+
+#################################################################
+# ACTIVATION, LOSS, OPTIMIZER, TRAINING
+#################################################################
+
+:ActivationFunction a owl:Class, gufo:Kind ;
+    rdfs:label "Activation Function"@en .
+
+:ReLU      a owl:Class, gufo:SubKind ;
+	rdfs:subClassOf :ActivationFunction ;
+	rdfs:label "ReLU"@en.
+
+:GELU      a owl:Class, gufo:SubKind ;
+	rdfs:subClassOf :ActivationFunction ;
+	rdfs:label "GELU"@en.
+
+:Sigmoid   a owl:Class, gufo:SubKind ;
+	rdfs:subClassOf :ActivationFunction ;
+	rdfs:label "Sigmoid"@en.
+
+:Tanh      a owl:Class, gufo:SubKind ;
+	rdfs:subClassOf :ActivationFunction ;
+	rdfs:label "Tanh"@en.
+
+:Softmax   a owl:Class, gufo:SubKind ;
+	rdfs:subClassOf :ActivationFunction ;
+	rdfs:label "Softmax"@en.
+
+:usesActivation a owl:ObjectProperty ;
+    rdfs:domain :NeuralNetworkLayer ;
+    rdfs:range :ActivationFunction ;
+    rdfs:label "uses activation"@en .
+
+#################################################################
+# TODO: Subclasses and properties for LossFunction, Optimizer, 
+# and TrainingAlgorithm.
+#################################################################
+
+:LossFunction a owl:Class, gufo:Kind ;
+    rdfs:label "Loss Function"@en .
+
+:Optimizer a owl:Class, gufo:Kind ;
+    rdfs:label "Optimizer"@en .
+
+:TrainingAlgorithm a owl:Class, gufo:Kind ;
+    rdfs:label "Training Algorithm"@en .
+
+#################################################################
+# COMPUTATIONAL GRAPH
+#################################################################
+
+:ComputationalGraph a owl:Class, gufo:FunctionalComplex ;
+    rdfs:label "Computational Graph"@en ;
+    rdfs:comment "The directed graph of operations that realises a forward (and optionally backward) computation for a given architecture."@en .
+
+:ForwardPass a owl:Class, gufo:Event ;
+    rdfs:label "Forward Pass"@en .
+
+:BackwardPass a owl:Class, gufo:Event ;
+    rdfs:label "Backward Pass"@en .

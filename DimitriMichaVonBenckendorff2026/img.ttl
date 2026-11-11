@@ -1,0 +1,488 @@
+#################################################################
+# Extension of XMLPO to model image input data and preprocessing.
+#################################################################
+
+@prefix : <http://example.com#> .
+@prefix xmlpo: <http://example.org/xmlpo#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+# IMAGE
+#################################################################
+
+:Image a owl:Class, gufo:Kind ;
+    rdfs:label "Image"@en ;
+    rdfs:comment
+        "Image data artifact. Specialization of XMLPO Data."@en ;
+    rdfs:subClassOf xmlpo:Data ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:isCollectionMemberOf ;
+        owl:someValuesFrom xmlpo:Dataset
+    ] .
+
+#################################################################
+# IMAGE QUALITY UNIVERSALS
+#################################################################
+
+:ImageCharacteristic a owl:Class, gufo:Quality ;
+    rdfs:label "Image Characteristic"@en ;
+    rdfs:comment
+        "Quality that inheres in an Image."@en ;
+    rdfs:subClassOf xmlpo:DataCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:inheresIn ;
+        owl:someValuesFrom :Image
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :ImageCharacteristicValue
+    ] .
+
+:ImageCharacteristicValue a owl:Class, gufo:QualityValue ;
+    rdfs:label "Image Characteristic Value"@en ;
+    rdfs:comment
+        "A value assumed by an Image Characteristic."@en .
+
+:assumesValue a owl:ObjectProperty ;
+    rdfs:subPropertyOf gufo:hasQualityValue ;
+    rdfs:domain :ImageCharacteristic ;
+    rdfs:range :ImageCharacteristicValue ;
+    rdfs:label "assumes value"@en .
+
+:Resolution a owl:Class, gufo:Quality ;
+    rdfs:label "Resolution"@en ;
+    rdfs:comment
+        "Quality representing the spatial resolution of an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :ResolutionValue
+    ] .
+
+:ResolutionValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:AspectRatio a owl:Class, gufo:Quality ;
+    rdfs:label "Aspect Ratio"@en ;
+    rdfs:comment
+        "Quality representing the ratio between image width and height."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :AspectRatioValue
+    ] .
+
+:AspectRatioValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:ColorSpace a owl:Class, gufo:Quality ;
+    rdfs:label "Color Space"@en ;
+    rdfs:comment
+        "Quality representing the color encoding scheme used by an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :ColorSpaceValue
+    ] .
+
+:ColorSpaceValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:NumberOfChannels a owl:Class, gufo:Quality ;
+    rdfs:label "Number Of Channels"@en ;
+    rdfs:comment
+        "Quality representing the number of channels contained in an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :NumberOfChannelsValue
+    ] .
+
+:NumberOfChannelsValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:BitDepth a owl:Class, gufo:Quality ;
+    rdfs:label "Bit Depth"@en ;
+    rdfs:comment
+        "Quality representing the number of bits used per channel."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :BitDepthValue
+    ] .
+
+:BitDepthValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:ImageFormat a owl:Class, gufo:Quality ;
+    rdfs:label "Image Format"@en ;
+    rdfs:comment
+        "Quality representing the file format of an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :ImageFormatValue
+    ] .
+
+:ImageFormatValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:CompressionType a owl:Class, gufo:Quality ;
+    rdfs:label "Compression Type"@en ;
+    rdfs:comment
+        "Quality representing the compression scheme applied to an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :CompressionTypeValue
+    ] .
+
+:CompressionTypeValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:FileSize a owl:Class, gufo:Quality ;
+    rdfs:label "File Size"@en ;
+    rdfs:comment
+        "Quality representing the storage size of an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :FileSizeValue
+    ] .
+
+:FileSizeValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:Brightness a owl:Class, gufo:Quality ;
+    rdfs:label "Brightness"@en ;
+    rdfs:comment
+        "Quality representing the average luminance of an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :BrightnessValue
+    ] .
+
+:BrightnessValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:brightnessValue a owl:DatatypeProperty ;
+    rdfs:domain :BrightnessValue ;
+    rdfs:range xsd:double .
+
+:Contrast a owl:Class, gufo:Quality ;
+    rdfs:label "Contrast"@en ;
+    rdfs:comment
+        "Quality representing the intensity variation within an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :ContrastValue
+    ] .
+
+:ContrastValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:contrastValue a owl:DatatypeProperty ;
+    rdfs:domain :ContrastValue ;
+    rdfs:range xsd:double .
+
+:Sharpness a owl:Class, gufo:Quality ;
+    rdfs:label "Sharpness"@en ;
+    rdfs:comment
+        "Quality representing the perceived edge clarity of an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :SharpnessValue
+    ] .
+
+:SharpnessValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+:NoiseLevel a owl:Class, gufo:Quality ;
+    rdfs:label "Noise Level"@en ;
+    rdfs:comment
+        "Quality representing the amount of visual noise present in an image."@en ;
+    rdfs:subClassOf :ImageCharacteristic ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :assumesValue ;
+        owl:someValuesFrom :NoiseLevelValue
+    ] .
+
+:NoiseLevelValue a owl:Class, gufo:QualityValue ;
+    rdfs:subClassOf :ImageCharacteristicValue .
+
+#################################################################
+# IMAGE PHASES
+#################################################################
+
+:RawImage a owl:Class, gufo:Phase ;
+	rdfs:label "Raw Image"@en ;
+    rdfs:comment
+        "Phase of Image before preprocessing."@en ;
+    rdfs:subClassOf :Image .
+
+:PreprocessedImage a owl:Class, gufo:Phase ;
+    rdfs:label "Preprocessed Image"@en ;
+    rdfs:comment "An image that has undergone at least one preprocessing event. The same individual can move from RawImage to PreprocessedImage (and further specializations) through successive events."@en ;
+    rdfs:subClassOf :Image ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom :ImagePreprocessingParticipation
+    ] .
+
+:PatchifiedImage a owl:Class, gufo:Phase ;
+    rdfs:label "Patchified Image"@en ;
+    rdfs:comment
+        "Phase of an Image resulting from a patchification event."@en ;
+    rdfs:subClassOf :PreprocessedImage .
+
+:NormalizedImage a owl:Class, gufo:Phase ;
+    rdfs:label "Normalized Image"@en ;
+    rdfs:comment
+        "Phase of an Image resulting from a normalization event."@en ;
+    rdfs:subClassOf :PreprocessedImage .
+
+:ResizedImage a owl:Class, gufo:Phase ;
+    rdfs:label "Resized Image"@en ;
+    rdfs:comment
+        "Phase of an Image resulting from a resizing event."@en ;
+    rdfs:subClassOf :PreprocessedImage .
+
+:CroppedImage a owl:Class, gufo:Phase ;
+    rdfs:label "Cropped Image"@en ;
+    rdfs:comment
+        "Phase of an Image resulting from a cropping event."@en ;
+    rdfs:subClassOf :PreprocessedImage .
+
+:TrainImage a owl:Class, gufo:Role ;
+    rdfs:label "Train Image"@en ;
+    rdfs:comment
+        "Role played by an Image that is part of a train set."@en ;
+    rdfs:subClassOf :Image ;
+	rdfs:subClassOf [
+		a owl:Restriction ;
+		owl:onProperty gufo:isCollectionMemberOf ;
+		owl:someValuesFrom xmlpo:TrainSet
+	] .
+
+:TestImage a owl:Class, gufo:Role ;
+    rdfs:label "Test Image"@en ;
+    rdfs:comment
+        "Role played by an Image that is part of a test set."@en ;
+    rdfs:subClassOf :Image ;
+	rdfs:subClassOf [
+		a owl:Restriction ;
+		owl:onProperty gufo:isCollectionMemberOf ;
+		owl:someValuesFrom xmlpo:TestSet
+	] .
+
+#################################################################
+# IMAGE PREPROCESSING EVENTS
+#################################################################
+
+:ImagePreprocessing a owl:Class, gufo:Event ;
+    rdfs:label "Image Preprocessing"@en ;
+    rdfs:comment
+        "Preprocessing event applied to image data."@en ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom :ImagePreprocessingParticipation
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom :TechniqueApplication
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom :ImageTransformation
+    ] .
+
+:changesQuality a owl:ObjectProperty ;
+    rdfs:domain :ImageTransformation ;
+    rdfs:range :ImageCharacteristic ;
+    rdfs:label "changes quality"@en .
+
+:ImageCropping a owl:Class, gufo:Event ;
+    rdfs:label "Image Cropping"@en ;
+    rdfs:subClassOf :ImagePreprocessing ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom [
+            a owl:Restriction ;
+            owl:onProperty gufo:mediates ;
+            owl:someValuesFrom :CroppingTechnique
+        ]
+    ] ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom [
+            a owl:Restriction ;
+            owl:onProperty :changesQuality ;
+            owl:someValuesFrom :Resolution
+        ]
+    ] .
+
+:ImageResizing a owl:Class, gufo:Event ;
+    rdfs:label "Image Resizing"@en ;
+    rdfs:subClassOf :ImagePreprocessing ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom [
+            a owl:Restriction ;
+            owl:onProperty gufo:mediates ;
+            owl:someValuesFrom :ResizingTechnique
+        ]
+    ] ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom [
+            a owl:Restriction ;
+            owl:onProperty :changesQuality ;
+            owl:someValuesFrom :Resolution
+        ]
+    ] .
+
+:ImageNormalization a owl:Class, gufo:Event ;
+    rdfs:label "Image Normalization"@en ;
+    rdfs:subClassOf :ImagePreprocessing ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom [
+            a owl:Restriction ;
+            owl:onProperty gufo:mediates ;
+            owl:someValuesFrom :NormalizationTechnique
+        ]
+    ] ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom [
+            a owl:Restriction ;
+            owl:onProperty :changesQuality ;
+            owl:someValuesFrom :Resolution
+        ]
+    ] .
+
+:ImagePatchification a owl:Class, gufo:Event ;
+    rdfs:label "Image Patchification"@en ;
+    rdfs:subClassOf :ImagePreprocessing ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom [
+            a owl:Restriction ;
+            owl:onProperty gufo:mediates ;
+            owl:someValuesFrom :PatchificationTechnique
+        ]
+    ] ;
+	rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediatedBy ;
+        owl:someValuesFrom [
+            a owl:Restriction ;
+            owl:onProperty :changesQuality ;
+            owl:someValuesFrom :Resolution
+        ]
+    ] .
+
+#################################################################
+# IMAGE PREPROCESSING TECHNIQUES
+#################################################################
+
+:ImagePreprocessingTechnique a owl:Class, gufo:Kind ;
+    rdfs:label "Image Preprocessing Technique"@en ;
+    rdfs:comment
+        "Technique used during image preprocessing."@en .
+
+:CroppingTechnique a owl:Class, gufo:SubKind ;
+    rdfs:label "Cropping Technique"@en ;
+    rdfs:subClassOf :ImagePreprocessingTechnique .
+
+:ResizingTechnique a owl:Class, gufo:SubKind ;
+    rdfs:label "Resizing Technique"@en ;
+    rdfs:subClassOf :ImagePreprocessingTechnique .
+
+:NormalizationTechnique a owl:Class, gufo:SubKind ;
+    rdfs:label "Normalization Technique"@en ;
+    rdfs:subClassOf :ImagePreprocessingTechnique .
+
+:PatchificationTechnique a owl:Class, gufo:SubKind ;
+    rdfs:label "Patchification Technique"@en ;
+    rdfs:subClassOf :ImagePreprocessingTechnique .
+
+#################################################################
+# RELATORS
+#################################################################
+
+:ImagePreprocessingParticipation a owl:Class, gufo:Relator ;
+    rdfs:label "Image Preprocessing Participation"@en ;
+    rdfs:comment "Relator that mediates the participation of an Image in an ImagePreprocessing event."@en ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediates ;
+        owl:someValuesFrom :Image
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediates ;
+        owl:someValuesFrom :ImagePreprocessing
+    ] .
+
+:TechniqueApplication a owl:Class, gufo:Relator ;
+    rdfs:label "Technique Application"@en ;
+    rdfs:comment "Relator that mediates the use of an ImagePreprocessingTechnique by an ImagePreprocessing event. Carries the concrete parameters of the application."@en ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediates ;
+        owl:someValuesFrom :ImagePreprocessing
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediates ;
+        owl:someValuesFrom :ImagePreprocessingTechnique
+    ] .
+
+:ImageTransformation a owl:Class, gufo:Relator ;
+    rdfs:label "Image Transformation"@en ;
+    rdfs:comment
+        "Relator that mediates the production of a PreprocessedImage phase by an ImagePreprocessing event."@en ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediates ;
+        owl:someValuesFrom :ImagePreprocessing
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty gufo:mediates ;
+        owl:someValuesFrom :PreprocessedImage
+    ] .
